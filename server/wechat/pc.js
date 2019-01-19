@@ -7,12 +7,18 @@ const { PC_PATH, PC_PASSWORD } = require('../config')
 
 const password$ = of(PC_PASSWORD)
 
+/**
+ * 返回 PC DB 链接
+ *
+ * @param {string} dbName 要链接的 DB 名
+ * @returns {Observable<Database>} 返回包含 Database 的 Observable
+ */
 function concatDB(dbName) {
   const dbPath$ = of(path.join(PC_PATH, `${dbName}.db`))
   const key$ = zip(password$, dbPath$).pipe(
     flatMap(([password, dbPath]) => from(hash(password, dbPath))),
   )
-  const query$ = zip(
+  const db$ = zip(
     key$,
     dbPath$.pipe(map(dbPath => new sqlite3.Database(dbPath))),
   ).pipe(
@@ -22,7 +28,7 @@ function concatDB(dbName) {
       return db
     }),
   )
-  return query$
+  return db$
 }
 module.exports = {
   concatPCDB: concatDB,

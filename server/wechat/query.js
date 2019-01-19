@@ -2,6 +2,13 @@ const { from } = require('rxjs')
 const { map, flatMap, zipAll, tap } = require('rxjs/operators')
 const path = require('path')
 
+/**
+ * 查询函数
+ *
+ * @param {string} sql 需要查询的 sql 语句
+ * @param {function(): Rx.Observable.<Database>} getDB 生产 DB 链接的函数
+ * @returns {Rx.Observable.<Object>} 返回包含查询数据的 Observable
+ */
 function query(sql, getDB) {
   const db$ = getDB()
   const query$ = db$.pipe(
@@ -26,6 +33,12 @@ function query(sql, getDB) {
   )
   return query$
 }
+/**
+ * 查询 DB 所有表名
+ *
+ * @param {function(): Rx.Observable.<Database>} getDB 生产 DB 链接的函数
+ * @returns {Rx.Observable.<Object>} 返回包含所有表名的 Observable
+ */
 function getAllTableName(getDB) {
   const sql = `SELECT * FROM sqlite_master WHERE type='table'`
   return query(sql, getDB).pipe(
@@ -44,6 +57,14 @@ function getAllTableName(getDB) {
     ),
   )
 }
+
+/**
+ * 获取表格前 1000 行数据
+ *
+ * @param {string} tName 表格名
+ * @param {function(): Rx.Observable.<Database>} getDB 生产 DB 链接函数
+ * @returns {Rx.Observable.<Object>} 返回包含前 1000 行数据的 Observable
+ */
 function getTable(tName, getDB) {
   const sql = `SELECT * FROM ${tName} limit 1000`
   return query(sql, getDB)

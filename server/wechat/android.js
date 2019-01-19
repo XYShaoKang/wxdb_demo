@@ -5,6 +5,13 @@ const { map } = require('rxjs/operators')
 const { ANDROID_PATH, ANDROID_KEY } = require('../config')
 
 const key$ = of(ANDROID_KEY)
+
+/**
+ * 返回安卓 DB 链接
+ *
+ * @param {string} dbName 要链接的 DB 名
+ * @returns {Observable<Database>} 返回包含 Database 的 Observable
+ */
 function concatDB(dbName) {
   const dbPath$ = of(
     new sqlite3.Database(path.join(ANDROID_PATH, `${dbName}.db`)),
