@@ -13,7 +13,7 @@ const password$ = of(PC_PASSWORD)
  * @param {string} dbName 要链接的 DB 名
  * @returns {Observable<Database>} 返回包含 Database 的 Observable
  */
-function concatDB(dbName) {
+function connectDB$(dbName) {
   const dbPath$ = of(path.join(PC_PATH, `${dbName}.db`))
   const key$ = zip(password$, dbPath$).pipe(
     flatMap(([password, dbPath]) => from(hash(password, dbPath))),
@@ -31,5 +31,5 @@ function concatDB(dbName) {
   return db$
 }
 module.exports = {
-  concatPCDB: concatDB,
+  connectPCDB$: connectDB$,
 }

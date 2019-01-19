@@ -6,4 +6,6 @@ module.exports = {
   PC_PASSWORD: '***',
   // 修改为对应的 key
   ANDROID_KEY: '***',
+  PLATFORM_ANDROID: 'android',
+  PLATFORM_PC: 'pc',
 }

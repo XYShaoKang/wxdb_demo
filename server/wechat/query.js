@@ -9,7 +9,7 @@ const path = require('path')
  * @param {function(): Rx.Observable.<Database>} getDB 生产 DB 链接的函数
  * @returns {Rx.Observable.<Object>} 返回包含查询数据的 Observable
  */
-function query(sql, getDB) {
+function query$(sql, getDB) {
   const db$ = getDB()
   const query$ = db$.pipe(
     flatMap(db => {
@@ -33,17 +33,18 @@ function query(sql, getDB) {
   )
   return query$
 }
+
 /**
  * 查询 DB 所有表名
  *
  * @param {function(): Rx.Observable.<Database>} getDB 生产 DB 链接的函数
  * @returns {Rx.Observable.<Object>} 返回包含所有表名的 Observable
  */
-function getAllTableName(getDB) {
+function getAllTableName$(getDB) {
   const sql = `SELECT * FROM sqlite_master WHERE type='table'`
-  return query(sql, getDB).pipe(
+  return query$(sql, getDB).pipe(
     flatMap(tables =>
-      query(
+      query$(
         tables.map(t => `Select count(*) from ${t.name}`).join(' union all '),
         getDB,
       ).pipe(
@@ -65,13 +66,13 @@ function getAllTableName(getDB) {
  * @param {function(): Rx.Observable.<Database>} getDB 生产 DB 链接函数
  * @returns {Rx.Observable.<Object>} 返回包含前 1000 行数据的 Observable
  */
-function getTable(tName, getDB) {
+function getTable$(tName, getDB) {
   const sql = `SELECT * FROM ${tName} limit 1000`
-  return query(sql, getDB)
+  return query$(sql, getDB)
 }
 
 module.exports = {
-  getAllTableName,
-  getTable,
-  query,
+  getAllTableName$,
+  getTable$,
+  query$,
 }

@@ -8,7 +8,12 @@
 const fs = require('fs')
 const { of, zip } = require('rxjs')
 const { map } = require('rxjs/operators')
-const { PC_PATH, ANDROID_PATH } = require('../config')
+const {
+  PC_PATH,
+  ANDROID_PATH,
+  PLATFORM_ANDROID,
+  PLATFORM_PC,
+} = require('../config')
 
 const catalogs = {
   android: ANDROID_PATH,
@@ -20,7 +25,7 @@ const catalogs = {
  * @param {string} platform 需要获取的平台
  * @returns {Rx.Observable.<FileInfo>} 返回对应平台包含所有 DB 列表的 Observable
  */
-function getDbs(platform) {
+function getDbs$(platform) {
   return of(catalogs[platform]).pipe(
     map(p => fs.readdirSync(p)),
     map(files =>
@@ -38,13 +43,13 @@ function getDbs(platform) {
  *
  * @returns {Rx.Observable.<FileInfo>} 返回包含所有 DB 列表的 Observable
  */
-function getAllDbs() {
-  const androidPath$ = getDbs('android')
-  const pcPath$ = getDbs('pc')
+function getAllDbs$() {
+  const androidPath$ = getDbs$(PLATFORM_ANDROID)
+  const pcPath$ = getDbs$(PLATFORM_PC)
   return zip(androidPath$, pcPath$).pipe(
     map(([android, pc]) => android.concat(pc)),
   )
 }
 module.exports = {
-  getAllDbs,
+  getAllDbs$,
 }

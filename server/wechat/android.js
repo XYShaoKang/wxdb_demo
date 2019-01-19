@@ -12,7 +12,7 @@ const key$ = of(ANDROID_KEY)
  * @param {string} dbName 要链接的 DB 名
  * @returns {Observable<Database>} 返回包含 Database 的 Observable
  */
-function concatDB(dbName) {
+function connectDB$(dbName) {
   const dbPath$ = of(
     new sqlite3.Database(path.join(ANDROID_PATH, `${dbName}.db`)),
   )
@@ -31,5 +31,5 @@ function concatDB(dbName) {
 }
 
 module.exports = {
-  concatAndroidDB: concatDB,
+  connectAndroidDB$: connectDB$,
 }

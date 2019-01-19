@@ -1,24 +1,7 @@
-const { concatAndroidDB } = require('./android')
-const { concatPCDB } = require('./pc')
-const {
-  getAllTableName: getNames,
-  getTable: getTableData,
-  query: queryData,
-} = require('./query')
-const { getAllDbs: getAllDbInfos } = require('./dbs')
-
-/**
- * 获取 DB 链接函数
- *
- * @param {string} dbName	需要链接数据库的名字
- * @param {string} platform	需要链接数据库的平台
- * @returns {function(): Rx.Observable.<Database>} 返回一个生产 DB 链接的函数
- */
-function getDB(dbName, platform) {
-  return platform === 'android'
-    ? () => concatAndroidDB(dbName)
-    : () => concatPCDB(dbName)
-}
+const getConnectDB = require('./get-connect-db')
+const { getAllTableName$, getTable$, query$ } = require('./query')
+const { getAllDbs$ } = require('./dbs')
+const { searchInTable$, searchInDB$, searchInAllDB$ } = require('./search')
 
 /**
  * 获取所有数据库中所有表格
@@ -28,7 +11,7 @@ function getDB(dbName, platform) {
  * @returns {Promise<Object>} 返回包含所有表格数据的 Promise
  */
 function getAllTableName(dbName, platform) {
-  return getNames(getDB(dbName, platform))
+  return getAllTableName$(getConnectDB(platform, dbName))
     .toPromise()
     .catch(err => {
       console.error(`错误:${err.message}`)
@@ -45,7 +28,7 @@ function getAllTableName(dbName, platform) {
  * @returns {Promise<Object>} 返回包含前 1000 行数据的 Promise
  */
 function getTable(dbName, tName, platform) {
-  return getTableData(tName, getDB(dbName, platform)).toPromise()
+  return getTable$(tName, getConnectDB(platform, dbName)).toPromise()
 }
 
 /**
@@ -54,7 +37,7 @@ function getTable(dbName, tName, platform) {
  * @returns {Promise<FileInfo>} 返回包含所有 DB 列表的 Observable
  */
 function getAllDbs() {
-  return getAllDbInfos().toPromise()
+  return getAllDbs$().toPromise()
 }
 
 /**
@@ -66,11 +49,15 @@ function getAllDbs() {
  * @returns {Promise<Object>} 返回包含查询数据的 Promise
  */
 function query(sql, dbName, platform) {
-  return queryData(sql, getDB(dbName, platform)).toPromise()
+  return query$(sql, getConnectDB(platform, dbName)).toPromise()
 }
+
 module.exports = {
   getAllTableName,
   getTable,
   getAllDbs,
   query,
+  searchInTable: (...arg) => searchInTable$(...arg).toPromise(),
+  searchInDB: (...arg) => searchInDB$(...arg).toPromise(),
+  searchInAllDB: (...arg) => searchInAllDB$(...arg).toPromise(),
 }
