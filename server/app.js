@@ -8,7 +8,10 @@ const {
   getAllTableName,
   getTable,
   getAllDbs,
+  searchInDB,
   searchInAllDB,
+  users,
+  message,
 } = require('./wechat')
 
 const staticPath = path.join(__dirname, '../public/')
@@ -26,7 +29,23 @@ router.get('/dbs', async (ctx, next) => {
 // 搜索,必须参数 platform text ,可选 dbName tName
 router.get('/search', async (ctx, next) => {
   const { text, tName, dbName, platform } = ctx.query
-  const data = await searchInAllDB(text, platform)
+  console.log(text, tName, dbName, platform)
+  const data = dbName
+    ? await searchInDB(text, platform, dbName)
+    : await searchInAllDB(text, platform)
+  ctx.response.body = data
+})
+
+// 获取用户列表
+router.get('/users', async (ctx, next) => {
+  const data = await users()
+  ctx.response.body = data
+})
+
+// 获取聊天记录
+router.get('/message', async (ctx, next) => {
+  const { username } = ctx.query
+  const data = await message(username)
   ctx.response.body = data
 })
 

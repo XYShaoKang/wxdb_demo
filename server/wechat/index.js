@@ -2,6 +2,8 @@ const getConnectDB = require('./get-connect-db')
 const { getAllTableName$, getTable$, query$ } = require('./query')
 const { getAllDbs$ } = require('./dbs')
 const { searchInTable$, searchInDB$, searchInAllDB$ } = require('./search')
+const users$ = require('./user')
+const message$ = require('./message')
 
 /**
  * 获取所有数据库中所有表格
@@ -60,4 +62,6 @@ module.exports = {
   searchInTable: (...arg) => searchInTable$(...arg).toPromise(),
   searchInDB: (...arg) => searchInDB$(...arg).toPromise(),
   searchInAllDB: (...arg) => searchInAllDB$(...arg).toPromise(),
+  users: (...arg) => users$(...arg).toPromise(),
+  message: (...arg) => message$(...arg).toPromise(),
 }

@@ -8584,6 +8584,13 @@ xdg-basedir@^3.0.0:
   resolved "http://registry.npm.taobao.org/xdg-basedir/download/xdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
   integrity sha1-SWsswQnsqNus/i3HK2A8F8WHCtQ=
 
+xml-js@^1.6.9:
+  version "1.6.9"
+  resolved "http://registry.npm.xyshaokang.top/repository/npmproxy/xml-js/-/xml-js-1.6.9.tgz#6e516ce53c64ea0043cbc6ee8500e5d693602757"
+  integrity sha1-blFs5Txk6gBDy8buhQDl1pNgJ1c=
+  dependencies:
+    sax "^1.2.4"
+
 xmlhttprequest-ssl@~1.5.4:
   version "1.5.5"
   resolved "http://registry.npm.taobao.org/xmlhttprequest-ssl/download/xmlhttprequest-ssl-1.5.5.tgz#c2876b06168aadc40e57d97e81191ac8f4398b3e"

@@ -102,7 +102,7 @@ export default class Tables extends Component {
                         >
                           {t.tableName}
                         </div>
-                        <Badge count={t.count} />
+                        <Badge count={t.count} overflowCount={999} />
                       </div>
                     </Menu.Item>
                   ))}

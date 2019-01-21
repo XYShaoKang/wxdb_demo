@@ -1,43 +1,32 @@
 import React, { Component } from 'react'
-import { Spin, message } from 'antd'
-import Files from './files'
-import fetch from 'node-fetch'
-import Tables from './tables'
+import DB from './db'
+import Chat from './chat'
 
 export default class App extends Component {
   state = {
-    dbList: [],
-    selectItem: '',
-  }
-  componentDidMount() {
-    fetch('/dbs')
-      .then(res => res.json())
-      .then(dbs => {
-        this.setState(state => ({ dbList: dbs }))
-      })
-  }
-  selectFiles = item => {
-    this.setState(state => ({ selectItem: item }))
-  }
-  back = ({ err }) => {
-    this.setState({ selectItem: '' })
-    if (err && err.message) {
-      message.error(err.message)
-    }
+    showDB: false,
+    showUser: true,
   }
   render() {
-    const { dbList, selectItem } = this.state
+    const { showDB, showUser } = this.state
     return (
       <div>
-        {selectItem === '' ? (
-          dbList.length > 0 ? (
-            <Files list={dbList} select={this.selectFiles} />
-          ) : (
-            <Spin />
-          )
-        ) : (
-          <Tables db={selectItem} back={this.back} />
-        )}
+        <button
+          onClick={() => {
+            this.setState({ showUser: false, showDB: true })
+          }}
+        >
+          查看数据库
+        </button>
+        <button
+          onClick={() => {
+            this.setState({ showUser: true, showDB: false })
+          }}
+        >
+          查看用户
+        </button>
+        {showDB && <DB />}
+        {showUser && <Chat />}
       </div>
     )
   }

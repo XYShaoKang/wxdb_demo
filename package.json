@@ -18,7 +18,8 @@
     "node-fetch": "^2.3.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "rxjs": "^6.3.3"
+    "rxjs": "^6.3.3",
+    "xml-js": "^1.6.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
