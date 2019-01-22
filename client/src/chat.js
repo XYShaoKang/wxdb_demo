@@ -6,12 +6,19 @@ export default class Chat extends Component {
   state = {
     user: '',
     messages: [],
+    me: {},
+  }
+  componentDidMount() {
+    fetch('http://localhost:8080/me')
+      .then(res => res.json())
+      .then(me => {
+        this.setState({ me: me[0] })
+      })
   }
   selectUser = user => {
     fetch(`/message?username=${user.username}`)
       .then(res => res.json())
       .then(messages => {
-        console.log(messages)
         this.setState(state => ({ messages, user }))
       })
     // console.log(username)
@@ -21,7 +28,8 @@ export default class Chat extends Component {
       <div
         style={{
           display: 'flex',
-          height: 500,
+          height: '100vh',
+          width: '100%',
         }}
       >
         <div
@@ -39,7 +47,11 @@ export default class Chat extends Component {
             width: '100%',
           }}
         >
-          <Message messages={this.state.messages} user={this.state.user} />
+          <Message
+            messages={this.state.messages}
+            user={this.state.user}
+            me={this.state.me}
+          />
         </div>
       </div>
     )

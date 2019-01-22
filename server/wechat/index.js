@@ -4,6 +4,9 @@ const { getAllDbs$ } = require('./dbs')
 const { searchInTable$, searchInDB$, searchInAllDB$ } = require('./search')
 const users$ = require('./user')
 const message$ = require('./message')
+const image$ = require('./image')
+const emoji$ = require('./emoji')
+const me$ = require('./me')
 
 /**
  * 获取所有数据库中所有表格
@@ -64,4 +67,7 @@ module.exports = {
   searchInAllDB: (...arg) => searchInAllDB$(...arg).toPromise(),
   users: (...arg) => users$(...arg).toPromise(),
   message: (...arg) => message$(...arg).toPromise(),
+  image: (...arg) => image$(...arg).toPromise(),
+  emoji: (...arg) => emoji$(...arg).toPromise(),
+  me: (...arg) => me$(...arg).toPromise(),
 }

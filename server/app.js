@@ -1,6 +1,7 @@
 const Koa = require('koa')
 const serve = require('koa-static')
 const path = require('path')
+const fs = require('fs')
 const app = new Koa()
 const router = require('koa-router')()
 const json = require('koa-json')
@@ -12,9 +13,13 @@ const {
   searchInAllDB,
   users,
   message,
+  image,
+  emoji,
+  me,
 } = require('./wechat')
 
 const staticPath = path.join(__dirname, '../public/')
+const rootPath = path.join(__dirname, './androidDB')
 
 app.use(json())
 
@@ -46,6 +51,34 @@ router.get('/users', async (ctx, next) => {
 router.get('/message', async (ctx, next) => {
   const { username } = ctx.query
   const data = await message(username)
+  ctx.response.body = data
+})
+
+// 获取图片
+router.get('/image', async (ctx, next) => {
+  const { msgId } = ctx.query
+  const data = await image(msgId)
+  const imgPaths = data.map(d => {
+    const imgPath = path.join(rootPath, d.path)
+    return { ...d, imgPath, isExists: fs.existsSync(imgPath) }
+  })
+
+  ctx.response.type = 'image/png'
+  ctx.response.body = fs.createReadStream(
+    imgPaths.find(i => i.isExists).imgPath,
+  )
+})
+
+// 获取聊天记录
+router.get('/emoji', async (ctx, next) => {
+  const { md5 } = ctx.query
+  const data = await emoji(md5)
+  ctx.response.body = data
+})
+
+// 获取本人的微信
+router.get('/me', async (ctx, next) => {
+  const data = await me()
   ctx.response.body = data
 })
 

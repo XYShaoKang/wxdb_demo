@@ -10,21 +10,32 @@ export default class App extends Component {
   render() {
     const { showDB, showUser } = this.state
     return (
-      <div>
-        <button
-          onClick={() => {
-            this.setState({ showUser: false, showDB: true })
+      <div
+        style={{
+          display: 'flex',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection:'column'
           }}
         >
-          查看数据库
-        </button>
-        <button
-          onClick={() => {
-            this.setState({ showUser: true, showDB: false })
-          }}
-        >
-          查看用户
-        </button>
+          <button
+            onClick={() => {
+              this.setState({ showUser: false, showDB: true })
+            }}
+          >
+            查看数据库
+          </button>
+          <button
+            onClick={() => {
+              this.setState({ showUser: true, showDB: false })
+            }}
+          >
+            查看用户
+          </button>
+        </div>
         {showDB && <DB />}
         {showUser && <Chat />}
       </div>
