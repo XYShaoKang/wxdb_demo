@@ -22,6 +22,8 @@ yarn install
 
 `server`目录下有两个文件夹`androidDB`放安卓端拿到的数据库,`pcDB`放 win 微信客户的数据库.
 
+安卓端资源目录`/sdcard/tencent/MicroMsg/XXXX`和`/sdcard/tencent/MicroMsg/Download`.`xxxx`跟数据目录下一样.要把这两个目录拷贝到`androidDB`下,才能取到图片和下载的文件.
+
 ## 运行
 
 ```bash
