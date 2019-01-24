@@ -16,7 +16,10 @@ const {
   image,
   emoji,
   me,
+  voiceInfo,
+  voiceStream,
 } = require('./wechat')
+const PassThrough = require('stream').PassThrough
 
 const staticPath = path.join(__dirname, '../public/')
 const rootPath = path.join(__dirname, './androidDB')
@@ -80,6 +83,23 @@ router.get('/emoji', async (ctx, next) => {
 router.get('/me', async (ctx, next) => {
   const data = await me()
   ctx.response.body = data
+})
+// 获取音频信息
+router.get('/voiceInfo', async (ctx, next) => {
+  const { msgId } = ctx.query
+  const data = await voiceInfo(msgId)
+  ctx.response.body = data
+})
+// 获取音频
+router.get('/voice', async (ctx, next) => {
+  const { msgId } = ctx.query
+  const data = await voiceInfo(msgId)
+  const voicePath = path.join(rootPath, data[0].path)
+  ctx.response.type = 'audio/mpeg'
+
+  ctx.body = voiceStream(voicePath)
+    .on('error', ctx.onerror)
+    .pipe(PassThrough())
 })
 
 // 获取数据库所有表格

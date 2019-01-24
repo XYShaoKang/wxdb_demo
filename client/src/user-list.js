@@ -18,7 +18,7 @@ export default class UserList extends Component {
           userList: users,
           data: users.slice(0, 20),
         }))
-        this.props.selectUser(users[0])
+        // this.props.selectUser(users[0])
       })
   }
   handleInfiniteOnLoad = index => {

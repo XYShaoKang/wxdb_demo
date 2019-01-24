@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { List, Avatar, Icon, message, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
-import MessageRight from './message-right'
+import MessageContent from './message-content'
 
 export default class Message extends Component {
   state = {
@@ -12,6 +12,7 @@ export default class Message extends Component {
     hasMore: true,
   }
 
+  // 滚动加载
   handleInfiniteOnLoad = index => {
     let { data, messages } = this.state
     this.setState({
@@ -31,19 +32,21 @@ export default class Message extends Component {
       loading: false,
     })
   }
-  componentWillReceiveProps(nextProp) {
-    this.setState({
-      messages: nextProp.messages,
-      data: nextProp.messages.slice(0, 20),
-      loading: false,
-      hasMore: true,
-    })
-
-    return false
+  static getDerivedStateFromProps(nextProp, prevState) {
+    if (nextProp.messages !== prevState.messages) {
+      // const voices = nextProp.messages.filter(m => m.type === 34)
+      return {
+        messages: nextProp.messages,
+        data: nextProp.messages.slice(0, 20),
+        // data: voices,
+        loading: false,
+        hasMore: true,
+      }
+    }
+    return null
   }
   render() {
     const { isLodaing, messages, user, me } = this.props
-    console.log(this.state)
     return (
       <InfiniteScroll
         initialLoad={false}
@@ -59,7 +62,7 @@ export default class Message extends Component {
           dataSource={this.state.data}
           renderItem={item => (
             <List.Item key={item.username}>
-              <MessageRight message={item} user={user} me={me} />
+              <MessageContent message={item} user={user} me={me} />
             </List.Item>
           )}
         />

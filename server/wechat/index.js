@@ -7,6 +7,8 @@ const message$ = require('./message')
 const image$ = require('./image')
 const emoji$ = require('./emoji')
 const me$ = require('./me')
+const voiceInfo$ = require('./voice')
+const { voiceStream } = require('./util')
 
 /**
  * 获取所有数据库中所有表格
@@ -70,4 +72,6 @@ module.exports = {
   image: (...arg) => image$(...arg).toPromise(),
   emoji: (...arg) => emoji$(...arg).toPromise(),
   me: (...arg) => me$(...arg).toPromise(),
+  voiceInfo: (...arg) => voiceInfo$(...arg).toPromise(),
+  voiceStream,
 }
