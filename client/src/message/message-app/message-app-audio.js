@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Howl, Howler } from 'howler'
-import { Button, Icon, Avatar, Card, Tooltip } from 'antd'
-import fetch from 'node-fetch'
+import { Howl } from 'howler'
+import { Icon } from 'antd'
 import MessageAppFooter from './message-app-footer'
 import MessageAppImage from './message-app-image'
 
@@ -62,7 +61,7 @@ export default class MessageAppAudio extends Component {
             <Icon type={play ? 'pause-circle' : 'play-circle'} />
           </MessageAppImage>
         </div>
-        {appInfo?.appName && (
+        {appInfo && (
           <MessageAppFooter
             appWatermarkUrl={appInfo.appWatermarkUrl}
             appName={appInfo.appName}

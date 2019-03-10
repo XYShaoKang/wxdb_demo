@@ -1,12 +1,17 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-const MessageImage = ({ msgId, imgPath }) => {
+const MessageImage = ({ msgId, imgPath, openGallery }) => {
   return (
-    <img
-      src={imgPath ? `/image?imgPath=${imgPath}` : `/image?msgId=${msgId}`}
-      alt=''
-      style={{ width: '100%', height: '100%' }}
-    />
+    <div>
+      <img
+        src={`/image?imgPath=${imgPath}`}
+        alt=''
+        style={{
+          maxHeight: '150px',
+        }}
+        onClick={() => openGallery(msgId)}
+      />
+    </div>
   )
 }
 export default MessageImage

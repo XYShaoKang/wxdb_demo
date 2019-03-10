@@ -1,69 +1,53 @@
-import React, { Component } from 'react'
-import { Howl, Howler } from 'howler'
-import { Button, Icon, Avatar, Card, Tooltip } from 'antd'
-import fetch from 'node-fetch'
+import React from 'react'
+import { Avatar } from 'antd'
 import MessageAppFooter from './message-app-footer'
 import MessagAppTitle from './message-app-title'
 import MessagAppDes from './message-app-des'
 
-export default class MessageAppFile extends Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    const {
-      imgPath,
-      appInfo,
-      title,
-      des,
-      quoteUrl,
-      size,
-      fileext,
-      msgId,
-    } = this.props
-    return (
+const MessageAppFile = ({ appInfo, title, size, fileext }) => {
+  return (
+    <div
+      style={{
+        fontSize: 14,
+        borderRadius: 10,
+        width: 300,
+        backgroundColor: '#fff',
+      }}
+    >
       <div
         style={{
-          fontSize: 14,
-          borderRadius: 10,
-          width: 300,
-          backgroundColor: '#fff',
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: 10,
         }}
       >
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: 10,
+            padding: '0 10px 0 0',
           }}
         >
-          <div
-            style={{
-              padding: '0 10px 0 0',
-            }}
-          >
-            <MessagAppTitle title={title} />
-            <MessagAppDes des={size} />
-          </div>
-          <Avatar
-            style={{
-              backgroundImage: `url("/icon?ext=${fileext}")`,
-              backgroundSize: '100% 100%',
-              width: 40,
-              flexShrink: 0,
-              backgroundColor: '#fff',
-            }}
-            size='large'
-            shape='square'
-          />
+          <MessagAppTitle title={title} />
+          <MessagAppDes des={size} />
         </div>
-        {appInfo?.appName && (
-          <MessageAppFooter
-            appWatermarkUrl={appInfo.appWatermarkUrl}
-            appName={appInfo.appName}
-          />
-        )}
+        <Avatar
+          style={{
+            backgroundImage: `url("/icon?ext=${fileext}")`,
+            backgroundSize: '100% 100%',
+            width: 40,
+            flexShrink: 0,
+            backgroundColor: '#fff',
+          }}
+          size='large'
+          shape='square'
+        />
       </div>
-    )
-  }
+      {appInfo && (
+        <MessageAppFooter
+          appWatermarkUrl={appInfo.appWatermarkUrl}
+          appName={appInfo.appName}
+        />
+      )}
+    </div>
+  )
 }
+export default MessageAppFile

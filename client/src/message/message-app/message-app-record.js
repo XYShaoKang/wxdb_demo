@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { Howl, Howler } from 'howler'
-import { Button, Icon, Avatar, Card, Tooltip, Modal, List } from 'antd'
-import fetch from 'node-fetch'
+import { Icon, Avatar, Modal, List } from 'antd'
 import MessageAppFooter from './message-app-footer'
 import MessagAppTitle from './message-app-title'
 import MessagAppDes from './message-app-des'
@@ -32,7 +30,6 @@ export default class MessageAppRecord extends Component {
   }
   render() {
     const { imgPath, appInfo, title, des, quoteUrl, datalist } = this.props
-    const msgSvrId = datalist[0]._attributes.datasourceid
     return (
       <div
         style={{
@@ -65,7 +62,7 @@ export default class MessageAppRecord extends Component {
             </MessageAppImage>
           </div>
         </div>
-        {appInfo?.appName && (
+        {appInfo && (
           <MessageAppFooter
             appWatermarkUrl={appInfo.appWatermarkUrl}
             appName={appInfo.appName}
@@ -92,11 +89,11 @@ export default class MessageAppRecord extends Component {
                         justifyContent: 'space-between',
                       }}
                     >
-                      <div>{item.sourcename.data}</div>
-                      <div>{item.sourcetime.data}</div>
+                      <div>{item.sourcename}</div>
+                      <div>{item.sourcetime}</div>
                     </div>
                   }
-                  description={item.datatitle?.data}
+                  description={item.datatitle}
                 />
               </List.Item>
             )}

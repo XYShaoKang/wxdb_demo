@@ -1,6 +1,24 @@
 import React, { Component } from 'react'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
+
 import UserList from './user-list'
 import Message from './message'
+
+const ME_QUERY = gql`
+  query me {
+    me {
+      username
+      alias
+      conRemark
+      nickname
+      displayname
+      reserved1
+      reserved2
+      value
+    }
+  }
+`
 
 export default class Chat extends Component {
   state = {
@@ -9,20 +27,7 @@ export default class Chat extends Component {
     currentUser: null,
     me: {},
   }
-  componentDidMount() {
-    fetch('/me')
-      .then(res => res.json())
-      .then(me => {
-        this.setState({ me: me[0] })
-      })
-  }
   selectUser = user => {
-    // fetch(`/message?username=${user.username}&page=0`)
-    //   .then(res => res.json())
-    //   .then(messages => {
-    //     this.setState(state => ({ messages, user }))
-    //   })
-    // console.log(username)
     this.setState({ currentUser: user })
   }
   render() {
@@ -51,12 +56,20 @@ export default class Chat extends Component {
           }}
         >
           {currentUser && (
-            <Message
-              key={currentUser}
-              user={currentUser}
-              me={me}
-              typeKey={typeKey}
-            />
+            <Query query={ME_QUERY}>
+              {({ loading, error, data: { me }, subscribeToMore }) => {
+                if (loading) return <div>Fetching</div>
+                if (error) return <div>Error</div>
+                return (
+                  <Message
+                    key={currentUser}
+                    user={currentUser}
+                    me={me}
+                    typeKey={typeKey}
+                  />
+                )
+              }}
+            </Query>
           )}
         </div>
       </div>
