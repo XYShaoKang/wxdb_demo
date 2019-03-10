@@ -32,7 +32,10 @@ module.exports = function generateFragmentTypes(API_HOST) {
       result.data.__schema.types = filteredData
 
       const fragmentTypesPath = path.join(__dirname, './fragmentTypes.json')
-      const filteredFileStr = fs.readFileSync(fragmentTypesPath, 'utf8')
+
+      const filteredFileStr = fs.existsSync(fragmentTypesPath)
+        ? fs.readFileSync(fragmentTypesPath, 'utf8')
+        : ''
       const filteredStr = JSON.stringify(result.data)
 
       if (filteredFileStr !== filteredStr) {
