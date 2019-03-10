@@ -1,33 +1,32 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Avatar } from 'antd'
 
-export default class MessageAppFooter extends Component {
-  render() {
-    const { appWatermarkUrl, appName } = this.props
-    return (
+const MessageAppFooter = ({ appWatermarkUrl, appName }) => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        borderTop: '1px solid #aaa',
+        // transform: 'scale(0.5) translate(-24px)',
+      }}
+    >
+      <Avatar
+        src={appWatermarkUrl}
+        style={{
+          transform: 'scale(0.5)',
+        }}
+      />
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          borderTop: '1px solid #aaa',
-          // transform: 'scale(0.5) translate(-24px)',
+          // marginLeft: 5,
+          color: '#aaa',
         }}
       >
-        <Avatar
-          src={appWatermarkUrl}
-          style={{
-            transform: 'scale(0.5)',
-          }}
-        />
-        <div
-          style={{
-            // marginLeft: 5,
-            color: '#aaa',
-          }}
-        >
-          {appName}
-        </div>
+        {appName}
       </div>
-    )
-  }
+    </div>
+  )
 }
+
+export default MessageAppFooter

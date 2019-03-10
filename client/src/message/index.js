@@ -1,35 +1,10 @@
 import React, { Component } from 'react'
-import {
-  List,
-  Avatar,
-  Icon,
-  message,
-  Spin,
-  Layout,
-  Menu,
-  Breadcrumb,
-} from 'antd'
-import InfiniteScroll from 'react-infinite-scroller'
-import MessageContent from './message-content'
+import { Layout } from 'antd'
 import MessageList from './message-list'
 
-const { Header, Content, Footer } = Layout
-
 export default class Message extends Component {
-  state = {
-    isLodaing: true,
-    messages: [],
-    loading: false,
-    hasMore: true,
-    page: 0,
-    pageSize: 10,
-    dataEnd: false,
-  }
-
   render() {
     const { user, me, typeKey } = this.props
-    const { messages, isLodaing, hasMore, loading } = this.state
-    console.log(this.state)
     return (
       <div
         style={{

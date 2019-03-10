@@ -1,22 +1,29 @@
 import React, { Component } from 'react'
-import { List, Avatar, Icon, message, Spin } from 'antd'
+import { List, message, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 import MessageContent from './message-content'
-import ColumnGroup from 'antd/lib/table/ColumnGroup'
+import { withApollo } from 'react-apollo'
 
-export default class MessageList extends Component {
+import Gallery from './Gallery'
+import MESSAGE_QUERY from '../../schema/MESSAGE_QUERY.graphql'
+
+const PAGE_SIZE = 20
+
+class MessageList extends Component {
   state = {
     messages: [],
+    images: [],
     loading: false,
     hasMore: true,
     page: 0,
-    pageSize: 10,
+    pageSize: PAGE_SIZE,
     dataEnd: false,
+    showGallery: false,
+    currentImage: 0,
   }
   // 滚动加载
-  handleInfiniteOnLoad = index => {
-    let { page, pageSize, dataEnd } = this.state
-    const { user, typeKey } = this.props
+  handleInfiniteOnLoad = async () => {
+    let { dataEnd } = this.state
     this.setState({
       loading: true,
     })
@@ -28,22 +35,6 @@ export default class MessageList extends Component {
       })
       return
     }
-    fetch(
-      `/message?username=${user.username}&page=${page +
-        1}&pageSize=${pageSize}${typeKey !== 0 ? `&type=${typeKey}` : ''}`,
-    )
-      .then(res => res.json())
-      .then(data => {
-        this.setState(({ messages, page }) => ({
-          messages: messages.concat(data),
-          loading: false,
-          page: page + 1,
-          dataEnd: !(data.length === pageSize),
-        }))
-      })
-  }
-
-  componentDidMount() {
     this._loadMessageData()
   }
   componentDidUpdate(prevProps) {
@@ -51,45 +42,70 @@ export default class MessageList extends Component {
       this.props.user !== prevProps.user ||
       this.props.typeKey !== prevProps.typeKey
     ) {
-      this.setState(
-        {
-          isLodaing: true,
-          messages: [],
-          loading: false,
-          hasMore: true,
-          page: 0,
-          pageSize: 10,
-          dataEnd: false,
-        },
-        () => {
-          this._loadMessageData()
-        },
-      )
+      this.setState({
+        isLodaing: true,
+        messages: [],
+        images: [],
+        loading: false,
+        hasMore: true,
+        page: 0,
+        pageSize: PAGE_SIZE,
+        dataEnd: false,
+      })
     }
   }
-  _loadMessageData() {
+  _loadMessageData = async () => {
     const { user, typeKey } = this.props
-    let { page, pageSize } = this.state
-    fetch(
-      `/message?username=${user.username}&page=${page}&pageSize=${pageSize}${
-        typeKey !== 0 ? `&type=${typeKey}` : ''
-      }`,
-    )
-      .then(res => res.json())
-      .then(messages => {
-        this.setState(({ pageSize }) => ({
-          messages,
-          isLodaing: false,
-          dataEnd: !(messages.length === pageSize),
-        }))
-      })
+    const { page, pageSize } = this.state
+
+    const {
+      data: { messages },
+    } = await this.props.client.query({
+      query: MESSAGE_QUERY,
+      variables: { username: user.username, page, pageSize, type: typeKey },
+    })
+
+    this.setState(state => {
+      const allMessages = state.messages.concat(messages)
+      return {
+        messages: allMessages,
+        images: allMessages.filter(
+          m => m.type === 3 || m.type === 1048625 || m.type === 268435505,
+        ),
+        page: state.page + 1,
+        loading: false,
+        isLodaing: false,
+        dataEnd: !(messages.length === pageSize),
+      }
+    })
+  }
+  openGallery = msgId => {
+    const { images } = this.state
+    this.setState({
+      showGallery: true,
+      currentImage: images.findIndex(i => i.msgId === msgId),
+    })
+  }
+  closeGallery = () => {
+    this.setState({
+      showGallery: false,
+      currentImage: 0,
+    })
   }
   render() {
     const { user, me } = this.props
-    const { messages, isLodaing, hasMore, loading } = this.state
+    const {
+      messages,
+      images,
+      isLodaing,
+      hasMore,
+      loading,
+      showGallery,
+      currentImage,
+    } = this.state
     return (
       <InfiniteScroll
-        initialLoad={false}
+        initialLoad={true}
         pageStart={0}
         loadMore={this.handleInfiniteOnLoad}
         hasMore={!loading && hasMore}
@@ -107,7 +123,12 @@ export default class MessageList extends Component {
           rowKey={item => item.msgId}
           renderItem={item => (
             <List.Item>
-              <MessageContent message={item} user={user} me={me} />
+              <MessageContent
+                message={item}
+                user={user}
+                me={me}
+                openGallery={this.openGallery}
+              />
             </List.Item>
           )}
           style={{
@@ -115,6 +136,16 @@ export default class MessageList extends Component {
             borderTopRightRadius: 0,
             height: '100%',
           }}
+        />
+        <Gallery
+          images={images.map(m => ({
+            src: `/image?msgId=${m.msgId}`,
+            thumbnail: `/image?imgPath=${m.imgPath}`,
+          }))}
+          showThumbnails
+          lightboxIsOpen={showGallery}
+          currentImage={currentImage}
+          closeGallery={this.closeGallery}
         />
         {loading && hasMore && (
           <div className='demo-loading-container'>
@@ -125,3 +156,5 @@ export default class MessageList extends Component {
     )
   }
 }
+
+export default withApollo(MessageList)
