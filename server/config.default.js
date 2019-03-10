@@ -8,4 +8,5 @@ module.exports = {
   ANDROID_KEY: '***',
   PLATFORM_ANDROID: 'android',
   PLATFORM_PC: 'pc',
+  UIN:'***'
 }

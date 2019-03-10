@@ -6,24 +6,28 @@ export default class Chat extends Component {
   state = {
     user: '',
     messages: [],
+    currentUser: null,
     me: {},
   }
   componentDidMount() {
-    fetch('http://localhost:8080/me')
+    fetch('/me')
       .then(res => res.json())
       .then(me => {
         this.setState({ me: me[0] })
       })
   }
   selectUser = user => {
-    fetch(`/message?username=${user.username}`)
-      .then(res => res.json())
-      .then(messages => {
-        this.setState(state => ({ messages, user }))
-      })
+    // fetch(`/message?username=${user.username}&page=0`)
+    //   .then(res => res.json())
+    //   .then(messages => {
+    //     this.setState(state => ({ messages, user }))
+    //   })
     // console.log(username)
+    this.setState({ currentUser: user })
   }
   render() {
+    const { currentUser, me } = this.state
+    const { typeKey } = this.props
     return (
       <div
         style={{
@@ -39,19 +43,21 @@ export default class Chat extends Component {
             flexShrink: 0,
           }}
         >
-          <UserList selectUser={this.selectUser} />
+          <UserList selectUser={this.selectUser} typeKey={typeKey} />
         </div>
         <div
           style={{
-            overflowY: 'auto',
             width: '100%',
           }}
         >
-          <Message
-            messages={this.state.messages}
-            user={this.state.user}
-            me={this.state.me}
-          />
+          {currentUser && (
+            <Message
+              key={currentUser}
+              user={currentUser}
+              me={me}
+              typeKey={typeKey}
+            />
+          )}
         </div>
       </div>
     )

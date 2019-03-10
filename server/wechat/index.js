@@ -2,13 +2,16 @@ const getConnectDB = require('./get-connect-db')
 const { getAllTableName$, getTable$, query$ } = require('./query')
 const { getAllDbs$ } = require('./dbs')
 const { searchInTable$, searchInDB$, searchInAllDB$ } = require('./search')
-const users$ = require('./user')
+const { users$, user$ } = require('./user')
 const message$ = require('./message')
 const image$ = require('./image')
 const emoji$ = require('./emoji')
 const me$ = require('./me')
 const voiceInfo$ = require('./voice')
-const { voiceStream } = require('./util')
+const appInfo$ = require('./app-info')
+const wxappInfo$ = require('./wxapp-info')
+const file$ = require('./file')
+const { voiceStream, fileMd5 } = require('./util')
 
 /**
  * 获取所有数据库中所有表格
@@ -64,14 +67,19 @@ module.exports = {
   getTable,
   getAllDbs,
   query,
+  voiceStream,
   searchInTable: (...arg) => searchInTable$(...arg).toPromise(),
   searchInDB: (...arg) => searchInDB$(...arg).toPromise(),
   searchInAllDB: (...arg) => searchInAllDB$(...arg).toPromise(),
   users: (...arg) => users$(...arg).toPromise(),
+  user: (...arg) => user$(...arg).toPromise(),
   message: (...arg) => message$(...arg).toPromise(),
   image: (...arg) => image$(...arg).toPromise(),
   emoji: (...arg) => emoji$(...arg).toPromise(),
   me: (...arg) => me$(...arg).toPromise(),
   voiceInfo: (...arg) => voiceInfo$(...arg).toPromise(),
-  voiceStream,
+  appInfo: (...arg) => appInfo$(...arg).toPromise(),
+  wxappInfo: (...arg) => wxappInfo$(...arg).toPromise(),
+  file: (...arg) => file$(...arg).toPromise(),
+  fileMd5,
 }
