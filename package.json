@@ -4,9 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start": "gulp",
-    "start:webpack": "webpack-dev-server --open",
-    "watch": "webpack --watch",
-    "build": "webpack",
+    "client": "webpack-dev-server --open",
+    "client:watch": "webpack --watch",
+    "client:build": "webpack",
     "serve": "nodemon --config nodemon.server.json --exec babel-node --config-file ./babel.config.server.js server/src/app.js",
     "serve:debug": "babel-node --config-file ./babel.config.server.js server/src/app.js --inspect --debug-brk --nolazy server/src/app.js"
   },
