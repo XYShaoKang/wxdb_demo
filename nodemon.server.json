@@ -1,0 +1,13 @@
+{
+  "verbose": true,
+  "ignore": [
+    ".git",
+    "node_modules",
+    "server/androidDB",
+    "server/pcDB",
+    "server/cache"
+  ],
+  "execMap": {},
+  "watch": ["server/src/**/*"],
+  "ext": "js,json"
+}
