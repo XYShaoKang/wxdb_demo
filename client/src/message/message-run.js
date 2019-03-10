@@ -1,75 +1,72 @@
-import React, { Component } from 'react'
-import { Button, Icon, Avatar, Card, Tooltip, List } from 'antd'
+import React from 'react'
 import MessageRunLike from './message-run-like'
 
-export default class MessageRun extends Component {
-  render() {
-    const {
-      tipdisplay: { data: tipdisplay },
-      fontcolor: { data: fontcolor },
-      championusername: { data: championusername },
-      rankinfo: {
-        rank: {
-          rankdisplay: { data: rankdisplay },
-          ranktitle: { data: ranktitle },
-        },
-        score: {
-          scoredisplay: { data: scoredisplay },
-          scoretitle: { data: scoretitle },
-        },
+const MessageRun = ({
+  content: {
+    appmsg: {
+      hardwareinfo: {
+        tipdisplay,
+        fontcolor,
+        championuser,
+        rankinfo: { rankdisplay, ranktitle, scoredisplay, scoretitle },
       },
-    } = this.props.content.msg.appmsg.hardwareinfo.messagenodeinfo
-    return (
+    },
+  },
+}) => {
+  const { reserved1, reserved2 } = championuser || {}
+  const iconUrl = reserved1 || reserved2
+  return (
+    <div
+      style={{
+        borderRadius: 5,
+        width: 260,
+        backgroundColor: '#fff',
+      }}
+    >
       <div
         style={{
-          borderRadius: 5,
-          width: 260,
-          backgroundColor: '#fff',
+          color: fontcolor,
+          display: 'flex',
+          justifyContent: 'space-between',
+          margin: 10,
         }}
       >
-        <div
-          style={{
-            color: fontcolor,
-            display: 'flex',
-            justifyContent: 'space-between',
-            margin: 10,
-          }}
-        >
-          <div>
-            <div
-              style={{
-                fontSize: 35,
-                fontWeight: 500,
-              }}
-            >
-              {rankdisplay}
-            </div>
-            <div>{ranktitle}</div>
-          </div>
+        <div>
           <div
             style={{
-              textAlign: 'right',
+              fontSize: 35,
+              fontWeight: 500,
             }}
           >
-            <div
-              style={{
-                fontSize: 35,
-                fontWeight: 500,
-              }}
-            >
-              {scoredisplay}
-            </div>
-            <div>{scoretitle}</div>
+            {rankdisplay}
           </div>
+          <div>{ranktitle}</div>
         </div>
-        <hr
+        <div
           style={{
-            margin: '0 10px 0',
-            borderTop: '1px solid #aaa',
+            textAlign: 'right',
           }}
-        />
-        <MessageRunLike title={tipdisplay} displayusername={championusername} />
+        >
+          <div
+            style={{
+              fontSize: 35,
+              fontWeight: 500,
+            }}
+          >
+            {scoredisplay}
+          </div>
+          <div>{scoretitle}</div>
+        </div>
       </div>
-    )
-  }
+      <hr
+        style={{
+          margin: '0 10px 0',
+          borderTop: '1px solid #aaa',
+        }}
+      />
+      <MessageRunLike title={tipdisplay} iconUrl={iconUrl} />
+    </div>
+  )
 }
+
+export default MessageRun

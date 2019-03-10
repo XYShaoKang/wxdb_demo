@@ -1,0 +1,139 @@
+query messages($username: String, $page: Int, $pageSize: Int, $type: Int) {
+  messages(username: $username, page: $page, pageSize: $pageSize, type: $type) {
+    msgId
+    msgSvrId
+    type
+    isSend
+    createTime
+    talker
+    imgPath
+    ... on TEXTMessage {
+      text: content
+    }
+    ... on XMLMessage {
+      content {
+        ... on MailContent {
+          pushmail {
+            subject
+            sender
+            digest
+            waplink
+          }
+        }
+        ... on NameCardContent {
+          namecardmsg {
+            nickname
+            bigheadimgurl
+            smallheadimgurl
+            brandIconUrl
+            username
+            user {
+              reserved1
+              reserved2
+            }
+          }
+        }
+        ... on QQMapContent {
+          qqmapmsg {
+            x
+            y
+            poiname
+            label
+          }
+        }
+        ... on APPContent {
+          appmsg {
+            appid
+            type
+            title
+            des
+            url
+            dataurl
+            appInfo {
+              appName
+              appWatermarkUrl
+            }
+            appattach {
+              totallen
+              fileext
+            }
+            recorditem {
+              sourcename
+              sourcetime
+              datatitle
+              datasourceid
+            }
+            weappinfo {
+              weappiconurl
+              username
+              wxappInfo {
+                smallHeadURL
+                nickname
+              }
+            }
+            sourcedisplayname
+            mmreader {
+              items {
+                cover
+                url
+                title
+                digest
+                styles {
+                  style {
+                    color
+                    range
+                    font
+                  }
+                }
+              }
+            }
+            wcpayinfo {
+              ... on TransferWcpayInfo {
+                paysubtype
+                feedesc
+              }
+              ... on HongbaoWcpayInfo {
+                iconurl
+                sendertitle
+              }
+            }
+            hardwareinfo {
+              ... on LikeHardwareInfo {
+                displayusername
+                title
+                likeuserlist {
+                  reserved1
+                  reserved2
+                }
+              }
+              ... on RankHardwareInfo {
+                tipdisplay
+                fontcolor
+                championuser {
+                  nickname
+                  reserved1
+                  reserved2
+                }
+                rankinfo {
+                  rankdisplay
+                  ranktitle
+                  scoredisplay
+                  scoretitle
+                }
+              }
+            }
+          }
+        }
+        ... on SYSContent {
+          sysmsg {
+            template
+            link_list {
+              name
+              nickname
+            }
+          }
+        }
+      }
+    }
+  }
+}

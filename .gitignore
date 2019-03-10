@@ -1,6 +1,11 @@
 node_modules
+
 server/config.js
 server/cache
+
+client/fragmentTypes.json
+dist
+
 public
 
 yarn-debug.log*
