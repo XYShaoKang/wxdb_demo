@@ -1,8 +1,8 @@
-const convert = require('xml-js')
-const fs = require('fs')
-const { decode } = require('silk-sdk')
-const ffmpeg = require('fluent-ffmpeg')
-const md5 = require('md5')
+import convert from 'xml-js'
+import fs from 'fs'
+import { decode } from 'silk-sdk'
+import ffmpeg from 'fluent-ffmpeg'
+import md5 from 'md5'
 
 function xmlToObj(xmlText) {
   return JSON.parse(
@@ -67,9 +67,4 @@ function decodeSemiXml(paramString) {
     }, {})
 }
 
-module.exports = {
-  xmlToObj,
-  voiceStream,
-  fileMd5,
-  decodeSemiXml,
-}
+export { xmlToObj, voiceStream, fileMd5, decodeSemiXml }

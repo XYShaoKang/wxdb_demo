@@ -1,0 +1,446 @@
+scalar DateTime
+
+type Query {
+  appInfos: [AppInfos!]!
+  users(page: Int, pageSize: Int, type: Int): [User!]!
+  user(username: String): User
+  me: User
+  messages(username: String, page: Int, pageSize: Int, type: Int): [Message]
+  message(msgSvrId: String): Message
+  voiceInfo(msgId: Int): VoiceInfo
+  appInfo(appId: String): AppInfo
+  wxappInfo(username: String): WxappInfo
+}
+
+type DB {
+  fileName: String
+  platform: String
+}
+
+type Mutation {
+  login(email: String): String
+}
+
+type AppInfos {
+  appId: String
+  appName: String
+  appDiscription: String
+}
+
+type User {
+  username: String
+  alias: String
+  conRemark: String
+  nickname: String
+  displayname: String
+  reserved1: String
+  reserved2: String
+  value: String
+}
+
+interface Message {
+  msgId: Int
+  msgSvrId: String
+  type: Int
+  isSend: Int
+  createTime: DateTime
+  talker: String
+  imgPath: String
+}
+
+type XMLMessage implements Message {
+  msgId: Int
+  msgSvrId: String
+  type: Int
+  isSend: Int
+  createTime: DateTime
+  talker: String
+  content: XMLContent
+  imgPath: String
+}
+
+union XMLContent =
+    APPContent
+  | SYSContent
+  | MailContent
+  | NameCardContent
+  | QQMapContent
+
+type APPContent {
+  appmsg: AppMsg
+}
+
+type AppMsg {
+  title: String
+  des: String
+  url: String
+  type: Int
+  dataurl: String
+  appid: String
+  appattach: Appattach
+  recorditem: [Recorditem]
+  weappinfo: Weappinfo
+  sourcedisplayname: String
+  hardwareinfo: HardwareInfo
+  mmreader: Mmreader
+  wcpayinfo: WcpayInfo
+  appInfo: AppInfo
+}
+
+type Weappinfo {
+  pagepath: String
+  username: String
+  appid: String
+  version: String
+  type: String
+  weappiconurl: String
+  shareId: String
+  wxappInfo: WxappInfo
+}
+type Recorditem {
+  datasourceid: String
+  sourcename: String
+  sourcetime: String
+  datatitle: String
+}
+type Appattach {
+  totallen: String
+  attachid: String
+  cdnattachurl: String
+  emoticonmd5: String
+  aeskey: String
+  fileext: String
+  islargefilemsg: String
+}
+union HardwareInfo = LikeHardwareInfo | RankHardwareInfo
+type LikeHardwareInfo {
+  displayusername: String
+  title: String
+  likeuserlist: LikeUser
+  devicetype: Int
+  hardwareshowtype: Int
+}
+type RankHardwareInfo {
+  devicetype: Int
+  hardwareshowtype: Int
+  ranklistshowtype: Int
+  followinfolist: String
+  rankinfolist: [RankInfo]
+  rankinfo: RankInfo
+  tipdisplay: String
+  color: String
+  highlightcolor: String
+  linecolor: String
+  highlightlinecolor: String
+  fontcolor: String
+  championuser: User
+}
+type LikeUser {
+  username: String
+  rankid: String
+  timestamp: String
+  reserved1: String
+  reserved2: String
+}
+type RankInfo {
+  username: String
+  rankid: String
+  rankdisplay: String
+  ranktitle: String
+  scoredisplay: String
+  scoretitle: String
+  nickname: String
+}
+type Mmreader {
+  items: [MmreaderItem]
+  count: Int
+  type: Int
+  name: String
+}
+type MmreaderItem {
+  cover: String
+  pub_time: String
+  fileid: String
+  url: String
+  title: String
+  del_flag: String
+  sources: String
+  itemshowtype: Int
+  digest: String
+  styles: Stryles
+}
+type Stryles {
+  topColor: String
+  style: [Stryle]
+}
+type Stryle {
+  range: String
+  font: String
+  color: String
+}
+
+union WcpayInfo = TransferWcpayInfo | HongbaoWcpayInfo
+
+type TransferWcpayInfo {
+  paysubtype: Int
+  feedesc: String
+  transcationid: String
+  transferid: String
+  invalidtime: String
+  begintransfertime: String
+  effectivedate: Int
+}
+type HongbaoWcpayInfo {
+  templateid: String
+  url: String
+  iconurl: String
+  receivertitle: String
+  sendertitle: String
+  scenetext: [String]
+  senderdes: String
+  receiverdes: String
+  nativeurl: String
+  sceneid: Int
+  innertype: Int
+}
+
+type SYSContent {
+  sysmsg: SYSMsg
+}
+type SYSMsg {
+  template: String
+  link_list: [Link]
+}
+type Link {
+  name: String
+  type: String
+  username: String
+  nickname: String
+}
+
+type MailContent {
+  pushmail: MailMsg
+}
+type MailMsg {
+  subject: String
+  attach: Boolean
+  sender: String
+  digest: String
+  date: DateTime
+  fromlist: MailFromTo
+  tolist: MailFromTo
+  cclist: MailFromTo
+  mailid: String
+  waplink: String
+}
+type MailFromTo {
+  count: String
+  name: String
+  addr: String
+}
+
+type NameCardContent {
+  namecardmsg: NameCardMsg
+}
+type NameCardMsg {
+  username: String
+  bigheadimgurl: String
+  smallheadimgurl: String
+  nickname: String
+  alias: String
+  fullpy: String
+  shortpy: String
+  imagestatus: Int
+  scene: Int
+  province: String
+  city: String
+  sign: String
+  percard: Int
+  sex: Int
+  certflag: Int
+  certinfo: String
+  certinfoext: String
+  brandIconUrl: String
+  brandHomeUrl: String
+  brandSubscriptConfigUrl: String
+  brandFlags: String
+  regionCode: String
+  antispamticket: String
+  user: User
+}
+
+type QQMapContent {
+  qqmapmsg: QQMapMsg
+}
+type QQMapMsg {
+  x: Float
+  y: Float
+  scale: Int
+  label: String
+  maptype: Int
+  poiname: String
+}
+
+type TEXTMessage implements Message {
+  msgId: Int
+  msgSvrId: String
+  type: Int
+  isSend: Int
+  createTime: DateTime
+  talker: String
+  content: String
+  imgPath: String
+}
+
+type VoiceInfo {
+  msgId: Int
+  username: String
+  msgType: Int
+  msgSubType: Int
+  path: String
+  size: Int
+  msgtime: DateTime
+}
+
+type AppInfo {
+  appId: String
+  appName: String
+  appDiscription: String
+  appIconUrl: String
+  appStoreUrl: String
+  appVersion: Int
+  appWatermarkUrl: String
+  packageName: String
+  status: String
+  signature: String
+  modifyTime: DateTime
+  appName_en: String
+  appName_tw: String
+  appDiscription_en: String
+  appDiscription_tw: String
+  appType: String
+  openId: String
+  authFlag: Int
+  appInfoFlag: Int
+  lvbuff: String
+  serviceAppType: Int
+  serviceAppInfoFlag: Int
+  serviceShowFlag: Int
+  appSupportContentType: Int
+  svrAppSupportContentType: Int
+  appName_hk: String
+}
+
+type WxappInfo {
+  usernameHash: String
+  username: String
+  appId: String
+  nickname: String
+  brandIconURL: String
+  roundedSquareIconURL: String
+  bigHeadURL: String
+  smallHeadURL: String
+  signature: String
+  appOpt: Int
+  registerSource: String
+  appInfo: AppInfo2
+  versionInfo: VersionInfo
+  bindWxaInfo: BindWxaInfo
+  dynamicInfo: DynamicInfo
+  reserved: String
+  syncTimeSecond: DateTime
+  syncVersion: String
+  bizMenu: String
+}
+
+type VersionInfo {
+  AppVersion: Int
+  VersionState: Int
+  VersionMD5: String
+  Categories: [String]
+  Tags: [String]
+  SearchWidgetVersionMD5: String
+  module_list: [Module]
+  UseModule: Boolean
+  Last_Version_Categories: [LastVersionCategories]
+  EntranceModule: String
+  code_size: Int
+  client_js_ext_info: ClientJsExtInfo
+}
+type Module {
+  name: String
+  md5: String
+  size: Int
+  independent: Boolean
+}
+type LastVersionCategories {
+  first: String
+  second: String
+  first_id: Int
+  second_id: Int
+  third: String
+  third_id: Int
+}
+type ClientJsExtInfo {
+  call_plugin_info: [String]
+}
+type AppInfo2 {
+  Appid: String
+  Network: Network
+  Template: [String]
+  MinPubStringVersion: String
+  OpenSearchWidget: Int
+  TcbCdnDomain: [String]
+}
+type Network {
+  RequestDomain: [String]
+  WsRequestDomain: [String]
+  UploadDomain: [String]
+  DownloadDomain: [String]
+  BizDomain: [String]
+}
+
+type BindWxaInfo {
+  bizEntryInfo: [BizEntryInfo]
+}
+type BizEntryInfo {
+  username: String
+  title: String
+  icon_url: String
+}
+
+type DynamicInfo {
+  NewSetting: [NewSetting]
+  NewCategories: [NewCategories]
+}
+type NewSetting {
+  MaxLocalstorageSize: Int
+  MaxCodeSize: Int
+  MaxWebviewDepth: Int
+  MaxBackgroundLifespan: Int
+  MaxRequestConcurrent: Int
+  MaxUploadConcurrent: Int
+  MaxDownloadConcurrent: Int
+  MaxFileStorageSize: Int
+  ExpiresAtList: Int
+  BackgroundNetworkInterruptedTimeout: Int
+  CanKeepAliveByAudioPlay: Int
+  LifeSpanBeforeSuspend: Int
+  LifeSpanAfterSuspend: Int
+  MaxWebsocketConnect: Int
+  ExpendedMaxWebviewDepth: Int
+  ActualWebviewDepth: Int
+  WebsocketSkipPortCheck: Int
+  MaxSubpackageSubCodeSize: Int
+  MaxSubpackageFullCodeSize: Int
+  MaxWorkerConcurrent: Int
+  ScanCodeEnableZZM: Int
+  MaxPluginSdkReadmeSize: Int
+  CanPreFetchData: Int
+  CanPeriodFetchData: Int
+  PeriodFetchData: Int
+}
+type NewCategories {
+  first: String
+  second: String
+}

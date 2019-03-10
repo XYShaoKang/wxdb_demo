@@ -5,15 +5,15 @@
  * @property {string} platform
  */
 
-const fs = require('fs')
-const { of, zip } = require('rxjs')
-const { map } = require('rxjs/operators')
-const {
+import fs from 'fs'
+import { of, zip } from 'rxjs'
+import { map } from 'rxjs/operators'
+import {
   PC_PATH,
   ANDROID_PATH,
   PLATFORM_ANDROID,
   PLATFORM_PC,
-} = require('../config')
+} from '../../config'
 
 const catalogs = {
   android: ANDROID_PATH,
@@ -50,6 +50,4 @@ function getAllDbs$() {
     map(([android, pc]) => android.concat(pc)),
   )
 }
-module.exports = {
-  getAllDbs$,
-}
+export { getAllDbs$ }

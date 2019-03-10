@@ -8,5 +8,9 @@ module.exports = {
   ANDROID_KEY: '***',
   PLATFORM_ANDROID: 'android',
   PLATFORM_PC: 'pc',
-  UIN:'***'
+  CACHE_PATH: path.join(__dirname, './cache/'),
+  ICON_PATH: path.join(__dirname, './icons/'),
+  SREVER_PORT: 3000,
+  // 微信对应的 uin
+  UIN: '***',
 }

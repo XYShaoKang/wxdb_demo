@@ -1,6 +1,5 @@
-const crypto = require('crypto')
-
-const fs = require('fs')
+import crypto from 'crypto'
+import fs from 'fs'
 
 /**
  * 获取 Salt
@@ -44,4 +43,4 @@ function hash(password, dbPath) {
   return getSalt(dbPath).then(salt => getHash(password, salt))
 }
 
-module.exports = { hash }
+export { hash }

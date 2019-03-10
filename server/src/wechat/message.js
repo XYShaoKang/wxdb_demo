@@ -1,7 +1,7 @@
-const { query$ } = require('./query')
-const getConnectDB = require('./get-connect-db')
-const { map } = require('rxjs/operators')
-const { xmlToObj, decodeSemiXml } = require('./util')
+import { query$ } from './query'
+import { getConnectDB } from './get-connect-db'
+import { map } from 'rxjs/operators'
+import { xmlToObj, decodeSemiXml } from './util'
 
 function createQuery$(platform, dbName) {
   return sql => {
@@ -9,33 +9,18 @@ function createQuery$(platform, dbName) {
   }
 }
 
-function messages$({ username, page, pageSize = 10, type } = {}) {
-  return createQuery$('android', 'EnMicroMsg')(
-    `SELECT CAST (msgSvrId AS TEXT) AS msgSvrId,
-        msgId,
-        type,
-        isSend,
-        createTime,
-        talker,
-        content,
-        imgPath
-    FROM message
-    WHERE talker = '${username}'
-    ${type ? `AND type = ${type}` : ''}
-    -- AND content like '%<type>19</type>%'
-    ORDER BY createTime DESC
-    ${page ? `LIMIT ${page * pageSize},${pageSize}` : ''}`,
-  ).pipe(
+function base$(sql) {
+  return createQuery$('android', 'EnMicroMsg')(sql).pipe(
     map(messages => {
       return messages.map(message => {
-        let { type, content, talker } = message
+        let { type, content, talker, isSend } = message
 
         // 群消息
         if (/@chatroom$/.test(talker)) {
           message.room = talker
           const contents = content.split('\n')
           // console.log(contents[0],'\n',contents.slice(1).join('\n'))
-          if (type !== 10000) {
+          if (type !== 10000 && isSend !== 1) {
             message.talker = talker = contents[0].split(':')[0]
             message.content = content = contents.slice(1).join('\n')
           }
@@ -85,10 +70,45 @@ function messages$({ username, page, pageSize = 10, type } = {}) {
           message.content = decodeSemiXml(content)
         }
 
-        return message
+        return { ...message, createTime: new Date(message.createTime) }
       })
     }),
   )
 }
 
-module.exports = messages$
+function messages$({ username, page, pageSize = 10, type } = {}) {
+  const sql = `
+  SELECT CAST (msgSvrId AS TEXT) AS msgSvrId,
+    msgId,
+    type,
+    isSend,
+    createTime,
+    talker,
+    content,
+    imgPath
+  FROM message
+  WHERE talker = '${username}'
+  ${type ? `AND type = ${type}` : ''}
+  -- AND content like '%<type>19</type>%'
+  ORDER BY createTime DESC
+  ${page !== undefined ? `LIMIT ${page * pageSize},${pageSize}` : ''}
+  `
+  return base$(sql)
+}
+function message$({ msgSvrId } = {}) {
+  const sql = `
+  SELECT CAST (msgSvrId AS TEXT) AS msgSvrId,
+    msgId,
+    type,
+    isSend,
+    createTime,
+    talker,
+    content,
+    imgPath
+  FROM message
+  WHERE msgSvrId = '${msgSvrId}'
+  `
+  return base$(sql)
+}
+
+export { messages$, message$ }

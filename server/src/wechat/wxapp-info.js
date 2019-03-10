@@ -1,5 +1,5 @@
-const { getAllTableName$, query$ } = require('./query')
-const getConnectDB = require('./get-connect-db')
+import { query$ } from './query'
+import getConnectDB from './get-connect-db'
 
 function createQuery$(platform, dbName) {
   return sql => {
@@ -13,4 +13,4 @@ function wxappInfo$(username) {
   )
 }
 
-module.exports = wxappInfo$
+export { wxappInfo$ }
