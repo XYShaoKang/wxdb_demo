@@ -1,9 +1,10 @@
-const path = require('path')
-var sqlite3 = require('@journeyapps/sqlcipher').verbose()
-const { of, zip } = require('rxjs')
-const { map } = require('rxjs/operators')
-const { ANDROID_PATH, ANDROID_KEY } = require('../config')
+import path from 'path'
+import sqlcipher from '@journeyapps/sqlcipher'
+import { of, zip } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { ANDROID_PATH, ANDROID_KEY } from '../../config'
 
+const sqlite3 = sqlcipher.verbose()
 const key$ = of(ANDROID_KEY)
 
 /**
@@ -30,6 +31,4 @@ function connectDB$(dbName) {
   return db$
 }
 
-module.exports = {
-  connectAndroidDB$: connectDB$,
-}
+export { connectDB$ as connectAndroidDB$ }

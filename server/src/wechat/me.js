@@ -1,19 +1,5 @@
-const { getAllTableName$, query$ } = require('./query')
-const getConnectDB = require('./get-connect-db')
-const {
-  concat,
-  map,
-  flatMap,
-  concatAll,
-  zipAll,
-  tap,
-  concatMap,
-  filter,
-  combineAll,
-  combineLatest,
-  catchError,
-} = require('rxjs/operators')
-
+import { query$ } from './query'
+import { getConnectDB } from './get-connect-db'
 
 function createQuery$(platform, dbName) {
   return sql => {
@@ -46,4 +32,4 @@ function me$() {
   )
 }
 
-module.exports = me$
+export { me$ }

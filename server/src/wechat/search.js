@@ -1,20 +1,15 @@
-const { of, from, zip } = require('rxjs')
-const {
-  concat,
+import { of, from } from 'rxjs'
+import {
   map,
   flatMap,
-  concatAll,
-  zipAll,
-  tap,
   concatMap,
   filter,
   combineAll,
-  combineLatest,
   catchError,
-} = require('rxjs/operators')
-const { getAllDbs$ } = require('./dbs')
-const { getAllTableName$, query$ } = require('./query')
-const getConnectDB = require('./get-connect-db')
+} from 'rxjs/operators'
+import { getAllDbs$ } from './dbs'
+import { getAllTableName$, query$ } from './query'
+import { getConnectDB } from './get-connect-db'
 
 function createQuery$(platform, dbName) {
   return sql => {
@@ -73,8 +68,4 @@ function searchInAllDB$(text, platform, dbs) {
     }),
   )
 }
-module.exports = {
-  searchInTable$,
-  searchInDB$,
-  searchInAllDB$,
-}
+export { searchInTable$, searchInDB$, searchInAllDB$ }

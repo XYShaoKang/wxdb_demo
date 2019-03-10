@@ -1,18 +1,6 @@
-const { getAllTableName$, query$ } = require('./query')
-const getConnectDB = require('./get-connect-db')
-const {
-  concat,
-  map,
-  flatMap,
-  concatAll,
-  zipAll,
-  tap,
-  concatMap,
-  filter,
-  combineAll,
-  combineLatest,
-  catchError,
-} = require('rxjs/operators')
+import { query$ } from './query'
+import { getConnectDB } from './get-connect-db'
+import { map } from 'rxjs/operators'
 
 function createQuery$(platform, dbName) {
   return sql => {
@@ -22,7 +10,7 @@ function createQuery$(platform, dbName) {
 
 // 查询所有已知微信号`SELECT r.username,r.alias,r.nickname,c.displayname,i.reserved1 FROM rcontact r LEFT JOIN chatroom c  ON r.username=c.chatroomname LEFT JOIN img_flag i where r.username=i.username`
 // 查询有聊天记录的微信号 `SELECT r.username,r.alias,r.nickname,c.displayname,i.reserved1 FROM rcontact r LEFT JOIN chatroom c  ON r.username=c.chatroomname LEFT JOIN img_flag i ON r.username=i.username WHERE r.username IN (SELECT talker FROM message WHERE talker NOT LIKE 'gh_%' GROUP BY talker )`
-function users$({ username, page, pageSize = 10, type } = {}) {
+function users$({ page, pageSize = 10, type } = {}) {
   const sql = `
   SELECT r.username,
          r.alias,
@@ -44,13 +32,13 @@ function users$({ username, page, pageSize = 10, type } = {}) {
    -- AND m.content like '%<type>19</type>%'
    GROUP BY m.talker
    ORDER BY m.createTime DESC
-   ${page ? `LIMIT ${page * pageSize},${pageSize}` : ''}`
+   ${page !== undefined ? `LIMIT ${page * pageSize},${pageSize}` : ''}`
 
   return createQuery$('android', 'EnMicroMsg')(sql).pipe(
     map(users => users.map(user => ({ ...user }))),
   )
 }
-function user$({ username, page, pageSize = 10 } = {}) {
+function user$({ username } = {}) {
   const sql = `
   SELECT r.username,
          r.alias,
@@ -71,4 +59,4 @@ function user$({ username, page, pageSize = 10 } = {}) {
   )
 }
 
-module.exports = { users$, user$ }
+export { users$, user$ }

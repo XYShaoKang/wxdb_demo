@@ -1,6 +1,6 @@
-const { connectAndroidDB$ } = require('./android')
-const { connectPCDB$ } = require('./pc')
-const { PLATFORM_ANDROID, PLATFORM_PC } = require('../config')
+import { connectAndroidDB$ } from './android'
+import { connectPCDB$ } from './pc'
+import { PLATFORM_ANDROID } from '../../config'
 /**
  * 获取 DB 链接函数
  *
@@ -13,4 +13,4 @@ function getConnectDB(platform, dbName) {
     ? () => connectAndroidDB$(dbName)
     : () => connectPCDB$(dbName)
 }
-module.exports = getConnectDB
+export { getConnectDB }

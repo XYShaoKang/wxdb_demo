@@ -1,6 +1,6 @@
-const { from } = require('rxjs')
-const { map, flatMap, zipAll, tap } = require('rxjs/operators')
-const path = require('path')
+import { from } from 'rxjs'
+import { map, flatMap } from 'rxjs/operators'
+import path from 'path'
 
 /**
  * 查询函数
@@ -71,8 +71,4 @@ function getTable$(tName, getDB) {
   return query$(sql, getDB)
 }
 
-module.exports = {
-  getAllTableName$,
-  getTable$,
-  query$,
-}
+export { getAllTableName$, getTable$, query$ }
