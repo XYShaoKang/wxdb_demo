@@ -15,8 +15,19 @@
 
 需要编译环境
 
+#### win10
+
 ```bash
 npm install --global --production windows-build-tools
+```
+
+#### archlinux
+
+```bash
+pacman -S base-devel
+pacman -S python2
+npm config set python /usr/bin/python2
+yarn global add node-gyp
 ```
 
 ### fluent-ffmpeg
