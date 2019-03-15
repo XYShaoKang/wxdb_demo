@@ -2,10 +2,16 @@ scalar DateTime
 
 type Query {
   appInfos: [AppInfos!]!
-  users(page: Int, pageSize: Int, type: Int): [User!]!
+  users(page: Int, pageSize: Int, messageType: Int, appType: Int): [User!]!
   user(username: String): User
   me: User
-  messages(username: String, page: Int, pageSize: Int, type: Int): [Message]
+  messages(
+    username: String
+    page: Int
+    pageSize: Int
+    type: Int
+    appType: Int
+  ): [Message]
   message(msgSvrId: String): Message
   voiceInfo(msgId: Int): VoiceInfo
   appInfo(appId: String): AppInfo

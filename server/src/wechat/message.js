@@ -76,7 +76,13 @@ function base$(sql) {
   )
 }
 
-function messages$({ username, page, pageSize = 10, type } = {}) {
+function messages$({ username, page, pageSize = 10, type, appType } = {}) {
+  const tatleFilter = username && `talker = '${username}'`
+  const messageTypeFilter = type && `type = ${type}`
+  const appTypeFilter = appType && `content like '%<type>${appType}</type>%'`
+  const messageFilter = [tatleFilter, messageTypeFilter, appTypeFilter]
+    .filter(t => t)
+    .join(' AND ')
   const sql = `
   SELECT CAST (msgSvrId AS TEXT) AS msgSvrId,
     msgId,
@@ -87,9 +93,7 @@ function messages$({ username, page, pageSize = 10, type } = {}) {
     content,
     imgPath
   FROM message
-  WHERE talker = '${username}'
-  ${type ? `AND type = ${type}` : ''}
-  -- AND content like '%<type>19</type>%'
+  ${messageFilter ? `WHERE ${messageFilter}` : ''}
   ORDER BY createTime DESC
   ${page !== undefined ? `LIMIT ${page * pageSize},${pageSize}` : ''}
   `

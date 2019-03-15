@@ -2,8 +2,8 @@ import { messages, voiceInfo, appInfo, wxappInfo } from '../wechat'
 
 // 获取聊天记录
 const messageAsync = async (ctx, next) => {
-  const { username, page, pageSize, type } = ctx.query
-  const data = await messages({ username, page, pageSize, type })
+  const { username, page, pageSize, type, appType } = ctx.query
+  const data = await messages({ username, page, pageSize, type, appType })
   ctx.response.body = data
 }
 

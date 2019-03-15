@@ -2,9 +2,9 @@ import { users, user, me } from '../wechat'
 
 // 获取用户列表
 const usersAsync = async (ctx, next) => {
-  const { page, pageSize, type } = ctx.query
+  const { page, pageSize, messageType, appType } = ctx.query
 
-  const data = await users({ page, pageSize, type })
+  const data = await users({ page, pageSize, messageType, appType })
   ctx.response.body = data
 }
 

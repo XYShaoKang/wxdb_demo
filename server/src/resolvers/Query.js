@@ -9,8 +9,11 @@ const appInfos = async (_, __, { dataSources }) => {
   return []
 }
 
-const users = async (_, { page, pageSize, type }, { dataSources }) =>
-  await dataSources.userAPI.users({ page, pageSize, type })
+const users = async (
+  _,
+  { page, pageSize, messageType, appType },
+  { dataSources },
+) => await dataSources.userAPI.users({ page, pageSize, messageType, appType })
 
 const user = async (_, { username }, { dataSources }) =>
   (await dataSources.userAPI.user({ username }))[0]
@@ -21,7 +24,7 @@ const me = async (_, { username }, { dataSources }) =>
 // 获取聊天记录
 const messages = async (
   _,
-  { username, page, pageSize, type },
+  { username, page, pageSize, type, appType },
   { dataSources },
 ) =>
   await dataSources.messageAPI.messages({
@@ -29,6 +32,7 @@ const messages = async (
     page,
     pageSize,
     type,
+    appType,
   })
 // 获取聊天记录
 const message = async (_, { msgSvrId }, { dataSources }) =>
