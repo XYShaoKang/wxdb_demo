@@ -1,24 +1,9 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
 
+import ME_QUERY from '../schema/ME_QUERY.graphql'
 import UserList from './user-list'
 import Message from './message'
-
-const ME_QUERY = gql`
-  query me {
-    me {
-      username
-      alias
-      conRemark
-      nickname
-      displayname
-      reserved1
-      reserved2
-      value
-    }
-  }
-`
 
 export default class Chat extends Component {
   state = {

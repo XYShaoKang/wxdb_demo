@@ -1,0 +1,9 @@
+query users($page: Int, $pageSize: Int, $type: Int) {
+  users(page: $page, pageSize: $pageSize, type: $type) {
+    username
+    reserved1
+    reserved2
+    conRemark
+    nickname
+  }
+}

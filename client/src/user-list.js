@@ -2,21 +2,9 @@ import React, { Component, Fragment } from 'react'
 import { List, message, Avatar, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 import { withApollo } from 'react-apollo'
-import gql from 'graphql-tag'
 
+import USERS_QUERY from '../schema/USER_QUERY.graphql'
 import './user-list.css'
-
-const USERS_QUERY = gql`
-  query users($page: Int, $pageSize: Int, $type: Int) {
-    users(page: $page, pageSize: $pageSize, type: $type) {
-      username
-      reserved1
-      reserved2
-      conRemark
-      nickname
-    }
-  }
-`
 
 class UserList extends Component {
   state = {

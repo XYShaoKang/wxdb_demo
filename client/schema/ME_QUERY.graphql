@@ -1,0 +1,12 @@
+query me {
+  me {
+    username
+    alias
+    conRemark
+    nickname
+    displayname
+    reserved1
+    reserved2
+    value
+  }
+}
