@@ -1,5 +1,5 @@
-query users($page: Int, $pageSize: Int, $type: Int) {
-  users(page: $page, pageSize: $pageSize, type: $type) {
+query users($page: Int, $pageSize: Int, $messageType: Int) {
+  users(page: $page, pageSize: $pageSize, messageType: $messageType) {
     username
     reserved1
     reserved2

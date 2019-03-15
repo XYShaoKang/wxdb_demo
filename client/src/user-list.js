@@ -51,7 +51,7 @@ class UserList extends Component {
       data: { users },
     } = await this.props.client.query({
       query: USERS_QUERY,
-      variables: { page, pageSize, type: typeKey },
+      variables: { page, pageSize, messageType: typeKey },
     })
 
     this.setState(state => ({
