@@ -12,13 +12,15 @@ import router from './routes'
 
 const staticPath = path.join(__dirname, '../../public/')
 
+const dataSources = () => ({
+  userAPI,
+  messageAPI,
+})
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  dataSources: () => ({
-    userAPI,
-    messageAPI,
-  }),
+  dataSources,
 })
 
 const app = new Koa()
@@ -30,6 +32,11 @@ app.use(serve(staticPath))
 const port = PORT
 const host = 'localhost'
 
-app.listen(port, host, () =>
-  console.log(`🚀 Server ready at http://${host}:${port}${server.graphqlPath}`),
-)
+if (process.env.NODE_ENV !== 'test')
+  app.listen(port, host, () =>
+    console.log(
+      `🚀 Server ready at http://${host}:${port}${server.graphqlPath}`,
+    ),
+  )
+
+export { app, typeDefs, resolvers, dataSources,ApolloServer }
