@@ -1,9 +1,9 @@
 import path from 'path'
 import sqlcipher from '@journeyapps/sqlcipher'
-import { hash } from './hash'
+import { hash } from '../utils/hash'
 import { of, from, zip } from 'rxjs'
 import { map, flatMap } from 'rxjs/operators'
-import { PC_PATH, PC_PASSWORD } from '../../config'
+import { PC_PATH, PC_PASSWORD } from '../../../config'
 
 const sqlite3 = sqlcipher.verbose()
 const password$ = of(PC_PASSWORD)
@@ -31,4 +31,4 @@ function connectDB$(dbName) {
   )
   return db$
 }
-export { connectDB$ as connectPCDB$ }
+export { connectDB$ }

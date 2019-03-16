@@ -39,7 +39,6 @@ export default {
   XMLMessage: {
     content: message => {
       const { type } = message
-      // console.log(JSON.stringify(message.content, null, 2))
       if (type === 285212721 || type === 486539313) {
         message = {
           ...message,
@@ -83,7 +82,6 @@ export default {
           content: { appmsg: formatMsg(message.content.msg.appmsg) },
         }
       }
-      // console.log(JSON.stringify(message.content, null, 2))
       return message.content
     },
   },

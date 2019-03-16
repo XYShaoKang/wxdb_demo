@@ -4,6 +4,10 @@ import { decode } from 'silk-sdk'
 import ffmpeg from 'fluent-ffmpeg'
 import md5 from 'md5'
 
+import { createQuery$ as createAndroidQuery$ } from '../android/query'
+import { createQuery$ as createPCQuery$ } from '../pc/query'
+import { PLATFORM_ANDROID } from '../../../config'
+
 function xmlToObj(xmlText) {
   return JSON.parse(
     convert.xml2json(xmlText, {
@@ -67,4 +71,12 @@ function decodeSemiXml(paramString) {
     }, {})
 }
 
-export { xmlToObj, voiceStream, fileMd5, decodeSemiXml }
+function createQuery$(platform, dbName) {
+  return sql => {
+    return platform === PLATFORM_ANDROID
+      ? createAndroidQuery$(dbName, sql)
+      : createPCQuery$(dbName, sql)
+  }
+}
+
+export { xmlToObj, voiceStream, fileMd5, decodeSemiXml, createQuery$ }

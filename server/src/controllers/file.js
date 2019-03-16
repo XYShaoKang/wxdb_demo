@@ -91,7 +91,6 @@ const iconAsync = async (ctx, next) => {
     `./${typeName ? typeName.name : 'file'}.svg`,
   )
 
-  // console.log(iconIndexes[0].fileExtensions.includes)
   ctx.response.type = 'image/svg+xml'
   ctx.response.body = fs.createReadStream(extIconPath)
 }

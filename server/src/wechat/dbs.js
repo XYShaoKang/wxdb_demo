@@ -50,4 +50,13 @@ function getAllDbs$() {
     map(([android, pc]) => android.concat(pc)),
   )
 }
-export { getAllDbs$ }
+
+/**
+ * 获取所有 DB 信息
+ *
+ * @returns {Promise<FileInfo>} 返回包含所有 DB 列表的 Observable
+ */
+function getAllDbs() {
+  return getAllDbs$().toPromise()
+}
+export { getAllDbs$, getAllDbs }

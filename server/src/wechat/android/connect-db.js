@@ -2,7 +2,7 @@ import path from 'path'
 import sqlcipher from '@journeyapps/sqlcipher'
 import { of, zip } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { ANDROID_PATH, ANDROID_KEY } from '../../config'
+import { ANDROID_PATH, ANDROID_KEY } from '../../../config'
 
 const sqlite3 = sqlcipher.verbose()
 const key$ = of(ANDROID_KEY)
@@ -31,4 +31,4 @@ function connectDB$(dbName) {
   return db$
 }
 
-export { connectDB$ as connectAndroidDB$ }
+export { connectDB$ }

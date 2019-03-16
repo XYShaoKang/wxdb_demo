@@ -15,10 +15,9 @@ const allDbsAsync = async (ctx, next) => {
 // 搜索,必须参数 platform text ,可选 dbName tName
 const searchAsync = async (ctx, next) => {
   const { text, tName, dbName, platform } = ctx.query
-  console.log(text, tName, dbName, platform)
   const data = dbName
     ? await searchInDB(text, platform, dbName)
-    : await searchInAllDB(text, platform)
+    : await searchInAllDB(platform, text)
   ctx.response.body = data
 }
 

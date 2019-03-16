@@ -1,15 +1,7 @@
-import { query$ } from './query'
-import { getConnectDB } from './get-connect-db'
+import { createQuery } from './query'
 
-function createQuery$(platform, dbName) {
-  return sql => {
-    return query$(sql, getConnectDB(platform, dbName))
-  }
-}
-
-function me$() {
-  return createQuery$('android', 'EnMicroMsg')(
-    `
+function me() {
+  const sql = `
     SELECT r.username,
         r.alias,
         r.conRemark,
@@ -27,9 +19,8 @@ function me$() {
             SELECT value
               FROM userinfo
             WHERE id = 2
-        );
- `,
-  )
+        );`
+  return createQuery('EnMicroMsg', sql)
 }
 
-export { me$ }
+export { me }

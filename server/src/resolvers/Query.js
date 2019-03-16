@@ -5,7 +5,6 @@ const appInfos = async (_, __, { dataSources }) => {
     pageSize: 10,
     type: 49,
   })
-  console.log(JSON.stringify(await dataSources.userAPI.me(), null, 2))
   return []
 }
 

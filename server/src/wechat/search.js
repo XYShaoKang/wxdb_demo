@@ -8,20 +8,13 @@ import {
   catchError,
 } from 'rxjs/operators'
 import { getAllDbs$ } from './dbs'
-import { getAllTableName$, query$ } from './query'
-import { getConnectDB } from './get-connect-db'
+import { getAllTableName$ } from './table'
+import { createQuery$ } from './utils'
 
-function createQuery$(platform, dbName) {
-  return sql => {
-    return query$(sql, getConnectDB(platform, dbName))
-  }
-}
-
-function searchInTable$(text, platform, dbName, tName) {
-  const queryTable = createQuery$(platform, dbName)
-  return queryTable(`PRAGMA  table_info([${tName}])`).pipe(
+function searchInTable$(query$, tName, text) {
+  return query$(`PRAGMA  table_info([${tName}])`).pipe(
     flatMap(columns =>
-      queryTable(
+      query$(
         `select * from ${tName} where ${columns
           .map(({ name }) => ` ${name} like '%${text}%'`)
           .join(' or ')}`,
@@ -30,14 +23,15 @@ function searchInTable$(text, platform, dbName, tName) {
   )
 }
 
-function searchInDB$(text, platform, dbName) {
-  return getAllTableName$(getConnectDB(platform, dbName)).pipe(
+function searchInDB$(platform, dbName, text) {
+  const query$ = createQuery$(platform, dbName)
+  return getAllTableName$(query$).pipe(
     concatMap(tableNames =>
       from(tableNames).pipe(
         filter(({ count }) => count > 0),
 
         map(({ tableName }) =>
-          searchInTable$(text, platform, dbName, tableName).pipe(
+          searchInTable$(query$, tableName, text).pipe(
             map(data => ({ tableName, data })),
           ),
         ),
@@ -47,17 +41,17 @@ function searchInDB$(text, platform, dbName) {
     ),
   )
 }
-function searchInAllDB$(text, platform, dbs) {
+function searchInAllDB$(platform, text) {
   return getAllDbs$().pipe(
     concatMap(dbs => {
       return from(
         dbs.filter(({ platform: p }) => !platform || p === platform),
       ).pipe(
         map(({ fileName: dbName, platform }) =>
-          searchInDB$(text, platform, dbName).pipe(
+          searchInDB$(platform, dbName, text).pipe(
             map(data => data.map(d => ({ dbName, ...d }))),
             catchError(err => {
-              console.error('searchInAllDB$', err)
+              console.error('searchInAllDB$', err.message)
               return of([])
             }),
           ),
@@ -68,4 +62,9 @@ function searchInAllDB$(text, platform, dbs) {
     }),
   )
 }
-export { searchInTable$, searchInDB$, searchInAllDB$ }
+
+const searchInDB = (platform, dbName, text) =>
+  searchInDB$(platform, dbName, text).toPromise()
+const searchInAllDB = (platform, text) =>
+  searchInAllDB$(platform, text).toPromise()
+export { searchInDB$, searchInAllDB$, searchInDB, searchInAllDB }
