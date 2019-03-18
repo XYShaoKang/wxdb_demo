@@ -2,7 +2,6 @@ import Query from './Query'
 import Mutation from './Mutation'
 import { GraphQLDateTime } from 'graphql-iso-date'
 import R from 'ramda'
-import { promoteDataProp, formatMsg, promoteAttributes } from '../util'
 
 export default {
   Query,
@@ -35,55 +34,6 @@ export default {
   HardwareInfo: {
     __resolveType: hardwareInfo =>
       hardwareInfo.likeuserlist ? 'LikeHardwareInfo' : 'RankHardwareInfo',
-  },
-  XMLMessage: {
-    content: message => {
-      const { type } = message
-      if (type === 285212721 || type === 486539313) {
-        message = {
-          ...message,
-          content: { appmsg: formatMsg(message.content.appmsg) },
-        }
-      } else if (type === 570425393) {
-        message = {
-          ...message,
-          content: {
-            sysmsg: formatMsg(
-              message.content.sysmsg.sysmsgtemplate.content_template,
-            ),
-          },
-        }
-      } else if (type === 35) {
-        message = {
-          ...message,
-          content: {
-            pushmail: formatMsg({
-              pushmail: message.content.msg.pushmail,
-            }),
-          },
-        }
-      } else if (type === 42) {
-        message = {
-          ...message,
-          content: {
-            namecardmsg: message.content.msg._attributes,
-          },
-        }
-      } else if (type === 48) {
-        message = {
-          ...message,
-          content: {
-            qqmapmsg: message.content.msg.location._attributes,
-          },
-        }
-      } else if (message.content.msg) {
-        message = {
-          ...message,
-          content: { appmsg: formatMsg(message.content.msg.appmsg) },
-        }
-      }
-      return message.content
-    },
   },
   VoiceInfo: {
     msgtime: ({ msgtime }) => new Date(msgtime),

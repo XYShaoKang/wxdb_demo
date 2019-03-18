@@ -1,12 +1,5 @@
 import { of, from } from 'rxjs'
-import {
-  map,
-  flatMap,
-  concatMap,
-  filter,
-  combineAll,
-  catchError,
-} from 'rxjs/operators'
+import { map, flatMap, concatMap, combineAll, catchError } from 'rxjs/operators'
 import { getAllDbs$ } from './dbs'
 import { getAllTableName$ } from './table'
 import { createQuery$ } from './utils'
@@ -20,25 +13,30 @@ function searchInTable$(query$, tName, text) {
           .join(' or ')}`,
       ),
     ),
+    map(data => (data.length > 5 ? data.filter((_, i) => i < 5) : data)),
   )
 }
 
 function searchInDB$(platform, dbName, text) {
   const query$ = createQuery$(platform, dbName)
   return getAllTableName$(query$).pipe(
-    concatMap(tableNames =>
-      from(tableNames).pipe(
-        filter(({ count }) => count > 0),
-
-        map(({ tableName }) =>
+    concatMap(tables => {
+      const tableNames = tables
+        .filter(({ count }) => count > 0)
+        .map(({ tableName }) => tableName)
+      if (tableNames.length === 0) {
+        return of([])
+      }
+      return from(tableNames).pipe(
+        map(tableName =>
           searchInTable$(query$, tableName, text).pipe(
             map(data => ({ tableName, data })),
           ),
         ),
         combineAll(),
         map(data => data.filter(d => d.data.length > 0)),
-      ),
-    ),
+      )
+    }),
   )
 }
 function searchInAllDB$(platform, text) {
