@@ -19,6 +19,7 @@
     "apollo-link-http": "^1.5.12",
     "apollo-server-koa": "^2.4.8",
     "apollo-server-testing": "^2.4.8",
+    "chalk": "^2.4.2",
     "fluent-ffmpeg": "^2.1.2",
     "graphql": "^14.1.1",
     "graphql-iso-date": "^3.6.1",

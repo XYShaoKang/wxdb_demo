@@ -45,7 +45,6 @@ function decodeSemiXml(paramString) {
   return paramString
     .split(/[\u0000]/)
     .slice(1)
-
     .reduce((prev, curr) => {
       const last = prev[prev.length - 1]
       if (prev.length === 0 || curr[1] === '.') {

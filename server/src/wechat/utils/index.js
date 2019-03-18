@@ -7,3 +7,4 @@ export {
 } from './util'
 
 export { hash } from './hash'
+export { log } from './log'

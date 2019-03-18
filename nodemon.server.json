@@ -5,7 +5,8 @@
     "node_modules",
     "server/androidDB",
     "server/pcDB",
-    "server/cache"
+    "server/cache",
+    "server/src/wechat/utils/cache"
   ],
   "execMap": {},
   "watch": ["server/src/**/*"],

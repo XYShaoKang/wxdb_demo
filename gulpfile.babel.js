@@ -15,7 +15,13 @@ function serve(cb) {
     script: 'server/src/app.js',
     exec:
       './node_modules/.bin/babel-node --config-file ./babel.config.server.js',
-    ignore: ['gulpfile.js', 'node_modules/', 'public/**/*.*', 'client/**/*.*'],
+    ignore: [
+      'gulpfile.js',
+      'node_modules/',
+      'public/**/*.*',
+      'client/**/*.*',
+      'server/src/wechat/utils/cache',
+    ],
     ext: 'js,json',
     watch: ['server/src/**/*'],
     stdout: false,

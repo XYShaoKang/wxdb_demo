@@ -1,7 +1,8 @@
 node_modules
 
 server/config.js
-server/cache
+server/**/cache
+server/src/__tests__
 
 client/fragmentTypes.json
 dist

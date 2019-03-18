@@ -15,3 +15,11 @@ export {
   wxappInfo,
   file,
 } from './android/index'
+
+export { 
+  // users, 
+  // user, 
+  // me, 
+  // messages, 
+  // message 
+} from './pc'
