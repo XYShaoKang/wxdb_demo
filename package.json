@@ -9,10 +9,12 @@
     "client:build": "webpack",
     "serve": "nodemon --config nodemon.server.json --exec babel-node --config-file ./babel.config.server.js server/src/app.js",
     "serve:debug": "babel-node --config-file ./babel.config.server.js server/src/app.js --inspect --debug-brk --nolazy server/src/app.js",
-    "server:test": "jest --config=jest.config.server.js --detectOpenHandles"
+    "server:test": "jest --config=jest.config.server.js --detectOpenHandles",
+    "storybook": "start-storybook"
   },
   "dependencies": {
     "@journeyapps/sqlcipher": "^3.2.1",
+    "@storybook/addon-actions": "^5.0.3",
     "antd": "^3.12.1",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
@@ -53,6 +55,7 @@
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
+    "@storybook/react": "^5.0.3",
     "babel-jest": "^24.5.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-import": "^1.11.0",

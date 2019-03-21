@@ -8,7 +8,7 @@ import { ApolloProvider } from 'react-apollo'
 import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory'
 
 import introspectionQueryResultData from './fragmentTypes.json'
-import App from './src/app'
+import App from './src/App'
 import './index.css'
 import 'video-react/dist/video-react.css'
 
