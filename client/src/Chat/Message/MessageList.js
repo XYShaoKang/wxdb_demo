@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { List, message, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
-import MessageContent from './message-content'
+import MessageContent from './MessageContent'
 import { withApollo } from 'react-apollo'
 
 import Gallery from './Gallery'
-import MESSAGE_QUERY from '../../schema/MESSAGE_QUERY.graphql'
+import MESSAGE_QUERY from '../schema/MESSAGE_QUERY.graphql'
 
 const PAGE_SIZE = 20
 

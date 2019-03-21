@@ -1,11 +1,10 @@
 import React from 'react'
-import { Icon } from 'antd'
-import MessageAppFooter from './message-app-footer'
-import MessagAppTitle from './message-app-title'
-import MessagAppDes from './message-app-des'
-import MessageAppImage from './message-app-image'
+import { Avatar } from 'antd'
+import MessageAppFooter from './MessageAppFooter'
+import MessagAppTitle from './MessagAppTitle'
+import MessagAppDes from './MessagAppDes'
 
-const MessageAppVideo = ({ imgPath, appInfo, title, des, quoteUrl }) => {
+const MessageAppFile = ({ appInfo, title, size, fileext }) => {
   return (
     <div
       style={{
@@ -20,11 +19,6 @@ const MessageAppVideo = ({ imgPath, appInfo, title, des, quoteUrl }) => {
           display: 'flex',
           justifyContent: 'space-between',
           padding: 10,
-          cursor: 'pointer',
-        }}
-        onClick={() => {
-          const w = window.open('about:blank')
-          w.location.href = quoteUrl
         }}
       >
         <div
@@ -33,11 +27,19 @@ const MessageAppVideo = ({ imgPath, appInfo, title, des, quoteUrl }) => {
           }}
         >
           <MessagAppTitle title={title} />
-          <MessagAppDes des={des} />
+          <MessagAppDes des={size} />
         </div>
-        <MessageAppImage imgPath={imgPath}>
-          <Icon type='video-camera' />
-        </MessageAppImage>
+        <Avatar
+          style={{
+            backgroundImage: `url("/icon?ext=${fileext}")`,
+            backgroundSize: '100% 100%',
+            width: 40,
+            flexShrink: 0,
+            backgroundColor: '#fff',
+          }}
+          size='large'
+          shape='square'
+        />
       </div>
       {appInfo && (
         <MessageAppFooter
@@ -48,5 +50,4 @@ const MessageAppVideo = ({ imgPath, appInfo, title, des, quoteUrl }) => {
     </div>
   )
 }
-
-export default MessageAppVideo
+export default MessageAppFile

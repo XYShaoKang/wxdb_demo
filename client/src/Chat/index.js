@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 
-import ME_QUERY from '../schema/ME_QUERY.graphql'
-import UserList from './user-list'
-import Message from './message'
+import ME_QUERY from './schema/ME_QUERY.graphql'
+import UserList from './UserList'
+import Message from './Message'
 
 export default class Chat extends Component {
   state = {

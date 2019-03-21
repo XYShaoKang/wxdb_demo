@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MessageQQemail = ({
+const MessageQQEmail = ({
   content: {
     pushmail: { waplink, sender, subject, digest },
   },
@@ -33,4 +33,4 @@ const MessageQQemail = ({
   )
 }
 
-export default MessageQQemail
+export default MessageQQEmail

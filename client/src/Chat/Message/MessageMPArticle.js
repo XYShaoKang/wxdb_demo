@@ -3,7 +3,7 @@ import { Card, List } from 'antd'
 
 const { Meta } = Card
 
-const MessageMpArticle = ({
+const MessageMPArticle = ({
   content: {
     appmsg: {
       mmreader: { items },
@@ -95,4 +95,4 @@ const MessageMpArticle = ({
   )
 }
 
-export default MessageMpArticle
+export default MessageMPArticle

@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { Howl, Howler } from 'howler'
 import { Button, Icon, Avatar, Card, Tooltip } from 'antd'
 import fetch from 'node-fetch'
-import MessageAppFooter from './message-app-footer'
-import MessagAppTitle from './message-app-title'
-import MessagAppDes from './message-app-des'
+import MessageAppFooter from './MessageAppFooter'
+import MessagAppTitle from './MessagAppTitle'
+import MessagAppDes from './MessagAppDes'
 
 const MessageAppWeapp = ({ imgPath, title, quoteUrl, weappinfo }) => {
   const { wxappInfo } = weappinfo

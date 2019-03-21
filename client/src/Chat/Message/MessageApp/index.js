@@ -1,11 +1,11 @@
 import React from 'react'
 import { Card, Avatar, Tooltip } from 'antd'
-import MessageAppAudio from './message-app-audio'
-import MessageAppVideo from './message-app-video'
-import MessageAppArticle from './message-app-article'
-import MessageAppFile from './message-app-file'
-import MessageAppRecord from './message-app-record'
-import MessageAppWeapp from './message-app-weapp'
+import MessageAppAudio from './MessageAppAudio'
+import MessageAppVideo from './MessageAppVideo'
+import MessageAppArticle from './MessageAppArticle'
+import MessageAppFile from './MessageAppFile'
+import MessageAppRecord from './MessageAppRecord'
+import MessageAppWeapp from './MessageAppWeapp'
 
 const MessageApp = ({
   imgPath,

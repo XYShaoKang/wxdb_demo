@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icon } from 'antd'
-import MessageHongbaoBase from './message-hongbao-base'
+import MessageHongbaoBase from './MessageHongbaoBase'
 
 const MessageTransfer = ({ content, isSend, username }) => {
   const { paysubtype, feedesc } = content.appmsg.wcpayinfo

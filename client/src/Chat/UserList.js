@@ -3,8 +3,8 @@ import { List, message, Avatar, Spin } from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 import { withApollo } from 'react-apollo'
 
-import USERS_QUERY from '../schema/USER_QUERY.graphql'
-import './user-list.css'
+import USERS_QUERY from './schema/USER_QUERY.graphql'
+import './UserList.css'
 
 class UserList extends Component {
   state = {

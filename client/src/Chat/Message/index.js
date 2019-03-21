@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Layout } from 'antd'
-import MessageList from './message-list'
+import MessageList from './MessageList'
 
 export default class Message extends Component {
   render() {

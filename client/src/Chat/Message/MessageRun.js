@@ -1,5 +1,5 @@
 import React from 'react'
-import MessageRunLike from './message-run-like'
+import MessageRunLike from './MessageRunLike'
 
 const MessageRun = ({
   content: {

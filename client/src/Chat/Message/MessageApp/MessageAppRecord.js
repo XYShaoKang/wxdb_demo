@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Icon, Avatar, Modal, List } from 'antd'
-import MessageAppFooter from './message-app-footer'
-import MessagAppTitle from './message-app-title'
-import MessagAppDes from './message-app-des'
-import MessageAppImage from './message-app-image'
+import MessageAppFooter from './MessageAppFooter'
+import MessagAppTitle from './MessagAppTitle'
+import MessagAppDes from './MessagAppDes'
+import MessageAppImage from './MessageAppImage'
 
 export default class MessageAppRecord extends Component {
   constructor(props) {

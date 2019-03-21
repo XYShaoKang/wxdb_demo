@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import DB from './db'
-import Chat from './chat'
+import DB from './DB'
+import Chat from './Chat'
 import { Button, Menu, Dropdown, Icon, message } from 'antd'
 
 const typeData = [

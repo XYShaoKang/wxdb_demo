@@ -1,6 +1,6 @@
 import React from 'react'
 import { Avatar } from 'antd'
-import MessageHongbaoBase from './message-hongbao-base'
+import MessageHongbaoBase from './MessageHongbaoBase'
 
 const MessageNameCard = ({
   content: {

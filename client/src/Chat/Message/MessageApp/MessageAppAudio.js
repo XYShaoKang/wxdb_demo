@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Howl } from 'howler'
 import { Icon } from 'antd'
-import MessageAppFooter from './message-app-footer'
-import MessageAppImage from './message-app-image'
+import MessageAppFooter from './MessageAppFooter'
+import MessageAppImage from './MessageAppImage'
 
 export default class MessageAppAudio extends Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import fetch from 'node-fetch'
 import { Layout, Menu, Icon, Badge, Table, Spin, Button } from 'antd'
-import './table.css'
+import './Tables.css'
 
 const { Sider, Content } = Layout
 

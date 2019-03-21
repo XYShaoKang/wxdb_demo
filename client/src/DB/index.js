@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Spin, message } from 'antd'
-import Files from './files'
+import Files from './Files'
 import fetch from 'node-fetch'
-import Tables from './tables'
+import Tables from './Tables'
 
 export default class DB extends Component {
   state = {

@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
 import { Avatar, Icon } from 'antd'
 import moment from 'moment'
-import MessageImage from './message-image'
-import MessageEmoji from './message-emoji'
-import MessageVoice from './message-voice'
-import MessageQQMap from './message-qqmap'
-import MessageApp from './message-app'
-import MessageMicroVideo from './message-micro-video'
-import MessageMpArticle from './message-mp-article'
-import MessagNotice from './message-notice'
-import MessageTransfer from './message-transfer'
-import MessageHongbao from './message-hongbao'
-import MessageRunLike from './message-run-like'
-import MessageRun from './message-run'
-import MessageQQemail from './message-qqemail'
-import MessageNameCard from './message-name-card'
+import MessageImage from './MessageImage'
+import MessageEmoji from './MessageEmoji'
+import MessageVoice from './MessageVoice'
+import MessageQQMap from './MessageQQMap'
+import MessageApp from './MessageApp'
+import MessageMicroVideo from './MessageMicroVideo'
+import MessageMPArticle from './MessageMPArticle'
+import MessagNotice from './MessageNotice'
+import MessageTransfer from './MessageTransfer'
+import MessageHongbao from './MessageHongbao'
+import MessageRunLike from './MessageRunLike'
+import MessageRun from './MessageRun'
+import MessageQQEmail from './MessageQQEmail'
+import MessageNameCard from './MessageNameCard'
 
 export default class MessageContent extends Component {
   createContent = (item, user) => {
@@ -158,7 +158,7 @@ export default class MessageContent extends Component {
     }
     if (type === 285212721) {
       // 公众号消息
-      return <MessageMpArticle content={content} />
+      return <MessageMPArticle content={content} />
     }
     if (type === 318767153) {
       // 通知消息
@@ -180,7 +180,7 @@ export default class MessageContent extends Component {
     }
     if (type === 486539313) {
       // 公众号信息 视频
-      return <MessageMpArticle content={content} />
+      return <MessageMPArticle content={content} />
     }
     if (type === 570425393) {
       // 微信群管理消息
