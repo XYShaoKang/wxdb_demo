@@ -4,6 +4,7 @@ import { Query } from 'react-apollo'
 import ME_QUERY from './schema/ME_QUERY.graphql'
 import UserList from './UserList'
 import Message from './Message'
+import styles from './index.less'
 
 export default class Chat extends Component {
   state = {
@@ -58,13 +59,7 @@ export default class Chat extends Component {
             </Query>
           )}
         </div>
-        <style jsx>{`
-          .user {
-            overflow-y: auto;
-            width: 200px;
-            flex-shrink: 0;
-          }
-        `}</style>
+        <style jsx>{styles}</style>
       </div>
     )
   }

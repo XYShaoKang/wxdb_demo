@@ -10,6 +10,24 @@ const API_HOST = `http://localhost:${API_PORT}`
 
 // generateFragmentTypes(API_HOST)
 
+// 默认样式解析
+const defaultStyleUse = ['style-loader', 'css-loader']
+// styled-jsx 样式解析
+const styledJsxUse = [
+  {
+    loader: 'babel-loader',
+    options: {
+      ...babelConfig,
+    },
+  },
+  {
+    loader: require('styled-jsx/webpack').loader,
+    options: {
+      type: 'scoped',
+    },
+  },
+]
+
 module.exports = {
   entry: './client/index.js',
   devtool: 'inline-source-map',
@@ -52,8 +70,22 @@ module.exports = {
         },
       },
       {
+        // 使用 styled-jsx 解析 client 下的 css
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        include: /client/,
+        use: styledJsxUse,
+      },
+      {
+        // 使用 styled-jsx 解析 client 下的 less
+        test: /\.less$/,
+        include: /client/,
+        use: styledJsxUse,
+      },
+      {
+        // 第三方包中的 css 使用默认解析
+        test: /\.css$/,
+        include: /node_modules/,
+        use: defaultStyleUse,
       },
     ],
   },
