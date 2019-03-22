@@ -27,11 +27,12 @@ export default class Chat extends Component {
         }}
       >
         <div
-          style={{
-            overflowY: 'auto',
-            width: 200,
-            flexShrink: 0,
-          }}
+          // style={{
+          //   overflowY: 'auto',
+          //   width: 200,
+          //   flexShrink: 0,
+          // }}
+          className='user'
         >
           <UserList selectUser={this.selectUser} typeKey={typeKey} />
         </div>
@@ -57,6 +58,13 @@ export default class Chat extends Component {
             </Query>
           )}
         </div>
+        <style jsx>{`
+          .user {
+            overflow-y: auto;
+            width: 200px;
+            flex-shrink: 0;
+          }
+        `}</style>
       </div>
     )
   }

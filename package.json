@@ -42,6 +42,7 @@
     "react-infinite-scroller": "^1.2.4",
     "rxjs": "^6.3.3",
     "silk-sdk": "^0.2.2",
+    "styled-jsx": "^3.2.1",
     "video-react": "^0.13.2",
     "xml-js": "^1.6.9"
   },
