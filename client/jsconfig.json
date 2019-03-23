@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "*": ["types/*"]
+    },
+    "target": "ES6",
+    // "checkJs": true, // 类型检查
+    // "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true, // 支持装饰器
+    "jsx": "react",
+    "newLine": "LF",
+    // "moduleResolution": "node",
+    "module": "commonjs", // 支持没有 type 类型的包
+    "moduleResolution": "node" // 模块解析方式
+  },
+  "exclude": ["node_modules", "**/node_modules/*"]
+}
