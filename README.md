@@ -2,26 +2,34 @@
 
 [![deprecated](http://badges.github.io/stability-badges/dist/deprecated.svg)](http://github.com/badges/stability-badges)
 
-## 要求
+## 环境要求
 
-主要是[node-sqlcipher](https://github.com/journeyapps/node-sqlcipher#windows)的要求
+### win10
 
-- Visual Studio 2015
-- Python 2.7
+参考[node-gyp#on-windows](https://github.com/nodejs/node-gyp#on-windows)
 
-我电脑上安装了太多环境,所以不太确定是不是必须的,之前我没有装`Python`也正常可以安装,但是偶尔会失败,后来装了下`Python`感觉安装好了,可以先试试,如果有错误的话再装,至于`vs2015`我电脑上没装,估计是用来编译用的,不知道是不是因为之前装过`node-pre-gyp`的关系.
+#### 方式一
 
-### silk-sdk
-
-需要编译环境
-
-#### win10
+使用 [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools)
 
 ```bash
 npm install --global --production windows-build-tools
 ```
 
-#### archlinux
+#### 方式二
+
+手动安装
+
+- [Visual Studio Build Tools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools)
+- [Python 2.7](https://www.python.org/downloads/)
+
+#### 坑
+
+当 Node 版本为 11.12.0 时,使用 yarn 安装编译失败,使用 npm 可以正常安装.
+
+使用 Node v10.15.13 LTS 可以正常使用 yarn 安装
+
+### archlinux
 
 ```bash
 pacman -S base-devel
