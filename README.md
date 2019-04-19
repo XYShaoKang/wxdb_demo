@@ -1,5 +1,7 @@
 # 浏览微信数据库 Demo
 
+> 请注意:本仓库已弃用,请关注 [wechat_browse_server](https://github.com/XYShaoKang/wechat_browse_server)
+
 [![deprecated](http://badges.github.io/stability-badges/dist/deprecated.svg)](http://github.com/badges/stability-badges)
 
 ## 要求
